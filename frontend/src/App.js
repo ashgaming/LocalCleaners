@@ -6,6 +6,8 @@ import Services from './pages/Services';
 import Pricing from './pages/Pricing';
 import Contact from './pages/Contact';
 import Booking from './pages/Booking';
+import AuthForm from './pages/AuthForm';
+import { EmployeeProfileForm } from './components/Auth/employee/EmployeeProfileForm';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/booking" element={<Booking />} />
+        <Route path="/login" element={<AuthForm />} />
+        <Route path="/employee/profile" element={<EmployeeProfileForm />} />
       </Routes>
     </Router>
   );

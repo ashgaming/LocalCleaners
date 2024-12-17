@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, Settings, LogOut, Menu } from 'lucide-react';
+import { Calendar, Clock, Settings, LogOut, Menu, User } from 'lucide-react';
 import Header from './Header';
 
 const navItems = [
   { icon: Calendar, label: 'Bookings', active: true },
   { icon: Clock, label: 'History' },
   { icon: Settings, label: 'Settings' },
+  { icon: User, label: 'Employees' },
   { icon: LogOut, label: 'Logout' },
 ];
 
-export default function Sidebar({ className = '' }) {
+const Sidebar = (props) => {
+  const className = props.className
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleSectionClick = (section) => {
+    props.selectSection(section)
+  }
 
   return (
     <div className={`bg-white shadow-lg ${className}`}>
@@ -25,21 +31,25 @@ export default function Sidebar({ className = '' }) {
         <div className="hidden md:block">
           <Header />
         </div>
-        <nav className="mt-8">
+        <div className="mt-8">
           {navItems.map(({ icon: Icon, label, active }) => (
-            <a
+            <button 
               key={label}
-              href="#"
-              className={`flex items-center px-4 py-3 ${
+              onClick={()=>
+                handleSectionClick(label)
+              }
+              className={`flex items-center px-4 py-3 w-full ${
                 active ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'
               }`}
             >
               <Icon className="h-5 w-5 mr-3" />
               {label}
-            </a>
+            </button>
           ))}
-        </nav>
+        </div>
       </div>
     </div>
   );
 }
+
+export default Sidebar;
