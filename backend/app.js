@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan')
 const cors = require('cors');
 const app = express();
 const port = 4000;
@@ -8,10 +9,21 @@ const cookieParser = require('cookie-parser');
 const connectToDB = require('./db/index');
 const userRoutes = require('./routes/user.routes');
 const employesRoutes = require('./routes/employes.routes')
+const imageRoutes = require('./routes/image.routes')
+const bookingRoutes = require('./routes/booking.routes')
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API,
+    api_secret: process.env.CLOUDINARY_SECREATE
+});
+
 
 connectToDB();
 
 // Middleware to serve static files
+app.use(morgan('dev'))
 app.use(express.static('public'));
 
 app.use(cors());
@@ -27,5 +39,8 @@ app.get('/', (req, res) => {
 
 app.use('/users', userRoutes);
 app.use('/employes', employesRoutes);
+app.use('/image', imageRoutes);
+app.use('/bookings', bookingRoutes);
+
 
 module.exports = app;

@@ -8,9 +8,7 @@ import EmployeeSection from '../components/Dashboard/Sections/EmployeeSection';
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [openSection, setOpenSection] = useState('Booking');
-
-  
+  const [openSection, setOpenSection] = useState('Bookings');
 
   const selectSection = (section) => {
     if(!section || section === null || section === '') { return  } ;
@@ -53,11 +51,11 @@ const Dashboard = () => {
 
       <div className="md:ml-64 p-4 md:p-8 mt-16 md:mt-0">
         {
-          openSection === 'Bookings' && <BookingSection /> &&
-          openSection === 'History' && <HistorySection /> &&
-          openSection === 'Settings' && <SettingSection /> &&
-          openSection === 'Employees' && <EmployeeSection /> &&
-          openSection === 'Logout' && <BookingSection /> 
+          (openSection === 'Bookings' && <BookingSection />) ||
+          (openSection === 'History' && <HistorySection />) ||
+          (openSection === 'Settings' && <SettingSection />) ||
+          (openSection === 'Employees' && <EmployeeSection />)
+         
         }
       
       </div>

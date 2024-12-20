@@ -4,9 +4,12 @@ import Navbar from '../components/Navbar';
 import ServiceSelection from '../components/Booking/ServiceSelection';
 import DateTimePicker from '../components/Booking/DateTimePicker';
 import AddressForm from '../components/Booking/AddressForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { createBooking } from '../redux/actions/BookingActions';
 
 export default function Booking() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const [bookingData, setBookingData] = useState({
     service: '',
@@ -17,10 +20,18 @@ export default function Booking() {
       unit: '',
       city: '',
       state: '',
-      zip: '',
+      pincode: '',
     },
   });
 
+  const { loading , sucess ,error , booking } = useSelector(state => state.createBooking)
+
+  const HandleBooking = () => {
+      console.log(bookingData)
+      localStorage.setItem('userAddress',JSON.stringify(bookingData))
+      dispatch(createBooking(bookingData));
+  }
+ 
   const handleServiceSelect = (serviceId) => {
     setBookingData((prev) => ({ ...prev, service: serviceId }));
   };
@@ -45,7 +56,7 @@ export default function Booking() {
       setStep(step + 1);
     } else {
       // Handle booking submission
-      navigate('/dashboard');
+      HandleBooking();
     }
   };
 
@@ -56,8 +67,8 @@ export default function Booking() {
       case 2:
         return bookingData.date !== '' && bookingData.time !== '';
       case 3:
-        const { street, city, state, zip } = bookingData.address;
-        return street !== '' && city !== '' && state !== '' && zip !== '';
+        const { street, city, state, pincode } = bookingData.address;
+        return street !== '' && city !== '' && state !== '' && pincode !== '';
       default:
         return false;
     }
@@ -71,25 +82,23 @@ export default function Booking() {
           <div className="bg-white rounded-lg shadow-md p-6">
             {/* Progress Steps */}
             <div className="flex items-center justify-between mb-8">
-              {[1, 2, 3].map((number) => (
+              {[1,2,3].map((number) => (
                 <div
                   key={number}
                   className="flex items-center"
                 >
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                      step >= number ? 'bg-blue-600 text-white' : 'bg-gray-200'
-                    }`}
-                  >
-                    {number}
-                  </div>
-                  {number < 3 && (
-                    <div
-                      className={`h-1 w-full ${
-                        step > number ? 'bg-blue-600' : 'bg-gray-200'
+                    className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= number ? 'bg-blue-600 text-white' : 'bg-gray-200'
                       }`}
+                  >{number}
+                  </div>
+
+                  { number < 3 && (
+                    <div
+                      className={`h-1 w-full ${step > number ? 'bg-blue-600' : 'bg-gray-200'
+                        }`}
                     />
-                  )}
+                  ) }
                 </div>
               ))}
             </div>
@@ -142,11 +151,10 @@ export default function Booking() {
               <button
                 onClick={handleNext}
                 disabled={!isStepComplete()}
-                className={`px-6 py-2 rounded-md ${
-                  isStepComplete()
+                className={`px-6 py-2 rounded-md ${isStepComplete()
                     ? 'bg-blue-600 text-white hover:bg-blue-700'
                     : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                }`}
+                  }`}
               >
                 {step === 3 ? 'Complete Booking' : 'Next'}
               </button>

@@ -1,25 +1,53 @@
-import React, { useState } from 'react';
-import { 
-  User, Phone, Building, Briefcase, Clock, Book, FileText, Upload 
+import React, { useEffect, useState } from 'react';
+import {
+  Clock, Book, Upload, Home
 } from 'lucide-react';
 import CustomInput from '../ui/CustomInput';
 import CustomButton from '../ui/CustomButton';
+import { BACKEND_URL, createEmployee } from '../../../redux/actions/UserActions';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import ErrorMessage from '../ui/ErrorMessage';
+import Loader from '../ui/Loader';
+
 
 
 export function EmployeeProfileForm() {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [loadingUpload, setLoadingUpload] = useState(false)
+  const [uploadError, setUploadError] = useState(false)
+
+  const { loading, error, success, profile: emp } = useSelector(state => state.createEmployee)
+  const { user } = useSelector(state=>state.userData)
+
+
   const [profile, setProfile] = useState({
-    fullName: '',
-    phone: '',
-    department: '',
-    position: '',
+    address: '',
+    profileImage: '',
     experience: '',
-    skills: [],
-    bio: ''
+    //  skills: [],
+    //  bio: ''
   });
+
+  useEffect(() => {
+    if (success) {
+
+      console.log(emp)
+      if ( user.employee?.status === 'unregistered' ) {
+        alert('Please create yoir profile')
+      } else {
+        navigate('/')
+      }
+    }
+  }, [success, navigate , user ])
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle profile submission
+
+    dispatch(createEmployee(profile))
     console.log('Profile submitted:', profile);
   };
 
@@ -27,6 +55,48 @@ export function EmployeeProfileForm() {
     const skills = e.target.value.split(',').map(skill => skill.trim());
     setProfile(prev => ({ ...prev, skills }));
   };
+
+  const handleImageUpload = async (e) => {
+    e.preventDefault();
+    setLoadingUpload(true)
+
+
+    const formData = new FormData()
+
+    const file = e.target.files[0];
+
+    if(!file){
+      return
+    }
+    formData.append('image', file);
+
+
+
+
+    try {
+      const response = await axios.post(`${BACKEND_URL}/image/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `bearer ${JSON.parse(localStorage.getItem('token')).token}`
+        }
+      });
+
+      console.log(response.data.image)
+
+      if (response.status === 201) {
+        setUploadError(false);
+        setProfile(prev => ({ ...prev, profileImage: response.data.image }))
+      } else {
+        throw new Error('Image upload failed. Please try again.');
+      }
+      setLoadingUpload(false)
+    } catch (error) {
+      setUploadError(error.message, 'An error occurred while uploading the image.');
+      console.log(error);
+      setLoadingUpload(false)
+    }
+  };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
@@ -39,41 +109,29 @@ export function EmployeeProfileForm() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-6">
             <CustomInput
-              label="Full Name"
-              icon={User}
-              placeholder="John Doe"
-              value={profile.fullName}
-              onChange={e => setProfile(prev => ({ ...prev, fullName: e.target.value }))}
+              label="Address"
+              icon={Home}
+              placeholder="New York"
+              value={profile.address}
+              onChange={e => setProfile(prev => ({ ...prev, address: e.target.value }))}
               required
             />
 
+            {/*
             <CustomInput
-              label="Phone Number"
-              icon={Phone}
-              type="tel"
-              placeholder="+1 (555) 000-0000"
-              value={profile.phone}
-              onChange={e => setProfile(prev => ({ ...prev, phone: e.target.value }))}
-              required
+            label="Phone Number"
+            icon={Phone}
+            type="tel"
+            placeholder="+1 (555) 000-0000"
+            value={profile.phone}
+            onChange={e => setProfile(prev => ({ ...prev, phone: e.target.value }))}
+            required
             />
+            */}
 
-            <CustomInput
-              label="Department"
-              icon={Building}
-              placeholder="e.g., Engineering"
-              value={profile.department}
-              onChange={e => setProfile(prev => ({ ...prev, department: e.target.value }))}
-              required
-            />
 
-            <CustomInput
-              label="Position"
-              icon={Briefcase}
-              placeholder="e.g., Senior Developer"
-              value={profile.position}
-              onChange={e => setProfile(prev => ({ ...prev, position: e.target.value }))}
-              required
-            />
+
+
 
             <CustomInput
               label="Years of Experience"
@@ -85,15 +143,18 @@ export function EmployeeProfileForm() {
               required
             />
 
-            <CustomInput
-              label="Skills (comma-separated)"
-              icon={Book}
-              placeholder="React, TypeScript, Node.js"
-              value={profile.skills.join(', ')}
-              onChange={handleSkillsChange}
-              required
-            />
-
+            {
+              /* 
+             
+                        <CustomInput
+                          label="Skills (comma-separated)"
+                          icon={Book}
+                          placeholder="React, TypeScript, Node.js"
+                          value={profile.skills.join(', ')}
+                          onChange={handleSkillsChange}
+                          required
+                        />
+            
             <div className="space-y-1">
               <label className="block text-sm font-medium text-gray-700">
                 Professional Bio
@@ -108,17 +169,30 @@ export function EmployeeProfileForm() {
               />
             </div>
 
+             */
+            }
+
             <div className="space-y-1">
+              
               <label className="block text-sm font-medium text-gray-700">
                 Profile Picture
               </label>
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+              {
+                uploadError &&
+                <ErrorMessage >{uploadError}</ErrorMessage>
+
+              }
+              <div className={`mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg`} style={{ backgroundImage: `url(${profile.profileImage})`}}>
                 <div className="space-y-1 text-center">
-                  <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                  {
+                    loadingUpload ? ( <Loader /> ) : ( <Upload className="mx-auto h-12 w-12 text-gray-400" /> )
+                  }
+                
+
                   <div className="flex text-sm text-gray-600">
                     <label className="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500">
                       <span>Upload a file</span>
-                      <input type="file" className="sr-only" accept="image/*" />
+                      <input type="file" className="sr-only" accept="image/*" disabled={loadingUpload} onChange={(e) => handleImageUpload(e)} />
                     </label>
                     <p className="pl-1">or drag and drop</p>
                   </div>
@@ -129,7 +203,7 @@ export function EmployeeProfileForm() {
           </div>
 
           <div className="flex gap-4">
-            <CustomButton type="submit" fullWidth>
+            <CustomButton type="submit" disabled={loading} fullWidth>
               Complete Profile
             </CustomButton>
             <CustomButton type="button" variant="outline" fullWidth>

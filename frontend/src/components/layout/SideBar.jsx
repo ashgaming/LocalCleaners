@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Calendar, Clock, Settings, LogOut, Menu, User } from 'lucide-react';
 import Header from './Header';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../../redux/actions/UserActions';
 
 const navItems = [
   { icon: Calendar, label: 'Bookings', active: true },
@@ -13,10 +15,19 @@ const navItems = [
 const Sidebar = (props) => {
   const className = props.className
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const dispatch = useDispatch()
 
   const handleSectionClick = (section) => {
-    props.selectSection(section)
+
+    if (section === 'Logout') {
+      console.log(section)
+      dispatch(logoutUser())
+    } else {
+      props.selectSection(section)
+    }
   }
+
+
 
   return (
     <div className={`bg-white shadow-lg ${className}`}>
@@ -26,21 +37,20 @@ const Sidebar = (props) => {
           <Menu className="h-6 w-6" />
         </button>
       </div>
-      
+
       <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:block`}>
         <div className="hidden md:block">
           <Header />
         </div>
         <div className="mt-8">
           {navItems.map(({ icon: Icon, label, active }) => (
-            <button 
+            <button
               key={label}
-              onClick={()=>
+              onClick={() =>
                 handleSectionClick(label)
               }
-              className={`flex items-center px-4 py-3 w-full ${
-                active ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'
-              }`}
+              className={`flex items-center px-4 py-3 w-full ${active ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'
+                }`}
             >
               <Icon className="h-5 w-5 mr-3" />
               {label}

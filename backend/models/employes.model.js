@@ -31,33 +31,14 @@ const employesSchema = new mongoose.Schema({
     socketId: {
         type: String,
     },
-    staus: {
+    status: {
         type: String,
-        enum: ['active', 'inactive'],
-        default: 'inactive',
+        enum: ['unregistered','active', 'inactive'],
+        default: 'unregistered',
     },
 
-    vehicle: {
-        color: {
-            type: String,
-            required: true,
-            minlength: [3, 'Color must be at least 3 character long'],
-        },
-        plate: {
-            type: String,
-            required: true,
-            minlength: [3, 'Plate must be at least 3 character long'],
-        },
-        capacity: {
-            type: Number,
-            required: true,
-            minlength: [1, 'Capacity must be at least 1 character long'],
-        },
-        vehicleType: {
-            type: String,
-            required: true,
-            enum: ['car', 'motorcycle', 'auto'],
-        }
+    address:{
+        type:String
     },
 
     location: {
@@ -72,14 +53,18 @@ const employesSchema = new mongoose.Schema({
     salary:{
         type :Number
     },
+    
+    experience:{
+        type :Number
+    },
 
     profileImage: {
         type:String
     },
 
-    post : {
+    role : {
         type:String,
-        enum:['manager','owner','emp','helper'],
+        enum:['manager','owner','employee','helper'],
         required:true,
     }
 

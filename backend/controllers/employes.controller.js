@@ -11,30 +11,23 @@ module.exports.registerEmployes = async (req, res, next) => {
         return res.status(400).json({ errors: error.array() })
     }
     
-    const { fullname, email, password , vehicle } = req.body
+    const { address , profileImage , experience } = req.body
 
-    const isEmployesAlreadyExist = await employesModel.findOne({email}).exec();
+    const isEmployesAlreadyExist = await employesModel.findOne({email:req.employee.email}).exec();
     
-    if(isEmployesAlreadyExist){
-        return res.status(400).json({ errors: "Email already exist"})
+    if(!isEmployesAlreadyExist){
+        return res.status(400).json({ errors: "Email not exist"})
     }
 
-    const hashedPassword = await employesModel.hashedPassword(password);
-
-    const employes = await employesService.createCaptain({
-        firstname: fullname.firstname,
-        lastname: fullname.lastname,
-        email,
-        password: hashedPassword,
-        color:vehicle.color,
-        plate:vehicle.plate,
-        capacity:vehicle.capacity,
-        vehicleType:vehicle.vehicleType
+    const employes = await employesService.createEmployesProfile({
+        email:req.employee.email,
+        address,
+        profileImage,
+        experience,
     });
-    
-    const token = employes.generateAuthToken();
 
-    res.status(201).json({ token, employes })
+
+    res.status(201).json({ employes })
 }
 
 module.exports.loginEmployes = async (req, res, next) => {
@@ -69,7 +62,7 @@ module.exports.loginEmployes = async (req, res, next) => {
 }
 
 module.exports.getEmployesProfile = async (req, res, next) => {
-    res.status(200).json({ employes : req.employes});
+    res.status(200).json({ employee : req.employee});
 }
 
 module.exports.logoutEmployes = async (req, res, next) =>{

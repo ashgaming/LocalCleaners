@@ -9,6 +9,7 @@ import Booking from './pages/Booking';
 import AuthForm from './pages/AuthForm';
 import { EmployeeProfileForm } from './components/Auth/employee/EmployeeProfileForm';
 
+
 function App() {
   return (
     <Router>
