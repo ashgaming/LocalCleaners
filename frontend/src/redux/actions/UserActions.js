@@ -2,7 +2,7 @@ import { LIST_MY_BOOKING_RESET } from '../constants/BookingConstants';
 import { CREATE_EMPLOYEE_ERROR, CREATE_EMPLOYEE_REQUEST, CREATE_EMPLOYEE_SUCCESS, USER_DATA_ERROR, USER_DATA_REQUEST, USER_DATA_RESET, USER_DATA_SUCCESS, USER_LOGIN_ERROR, USER_LOGIN_REQUEST, USER_LOGIN_RESET, USER_LOGIN_SUCCESS, USER_REGISTER_ERROR, USER_REGISTER_REQUEST, USER_REGISTER_RESET, USER_REGISTER_SUCCESS } from '../constants/UserConstants';
 import axios from 'axios'
 
-export const BACKEND_URL = process.env.BACKEND_URL ? process.env.BACKEND_URL : 'http://localhost:4000'
+export const BACKEND_URL = process.env.BACKEND_URL ? process.env.BACKEND_URL : 'https://localcleaners-backend.onrender.com'
 
 export const getUserData = (type) => async (dispatch, navigate) => {
 

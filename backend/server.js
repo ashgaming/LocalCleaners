@@ -2,17 +2,34 @@ const http = require('http');
 const app = require('./app');
 //const { initializeSocket } = require('./socket');
 const port = process.env.PORT || 4000;
+const cluster = require('cluster');
+const os = require('os');
 
-const server = http.createServer(app);
 
-const server2 = http.createServer(app);
 
 //initializeSocket(server);
 
-server.listen(port,()=>{
-    console.log(`server is running on port:http://localhost:${port}`)
-});
+// Check if the current process is the master
+if (cluster.isMaster) {
+    const numCPUs = os.cpus().length;
+    console.log(`Master process is running. Forking for ${numCPUs} CPUs...`);
 
-server2.listen(5000,()=>{
-    console.log(`server is running on port:http://localhost:${'5000'}`)
-});
+    // Fork a worker process for each CPU
+    for (let i = 0; i < numCPUs; i++) {
+        cluster.fork();
+    }
+
+    // Listen for worker exit and restart it
+    cluster.on('exit', (worker, code, signal) => {
+        console.error(`Worker ${worker.process.pid} died. Starting a new worker...`);
+        cluster.fork();
+    });
+} else {
+
+    const server = http.createServer(app);
+
+    // Start the server
+    server.listen(port, () => {
+        console.log(`Worker ${process.pid} is listening on port ${port}`);
+    });
+}
