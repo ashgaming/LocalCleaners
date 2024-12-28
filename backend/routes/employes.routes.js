@@ -19,7 +19,7 @@ router.post('/register/profile',
     body('address').isLength({ min: 3 }).withMessage('color must be 3 letter long'),
     body('profileImage').isLength({ min: 3 }).withMessage('plate must be 3 letter long'),
     body('experience').isNumeric().withMessage('Capacity must be a positive number'),
-], employesController.registerEmployes)
+], employesController.registerEmployesProfile)
 
 router.post('/login', [
     body('email').isEmail().withMessage('Invalid Email'),
@@ -29,6 +29,9 @@ router.post('/login', [
 router.get('/profile', authMiddleware.authEmployes, employesController.getEmployesProfile)
 
 router.get('/logout', authMiddleware.authEmployes, employesController.logoutEmployes)
+
+
+router.get('/get-employee-list', authMiddleware.authEmployes, employesController.getEmployesAvailability)
 
 
 module.exports = router;

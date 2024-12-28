@@ -20,7 +20,7 @@ export default function AddressForm({ address, onChange }) {
             type="text"
             value={address.street}
             onChange={(e) => onChange('street', e.target.value)}
-            className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="w-full p-2 h-8 rounded-md border-gray-300 shadow-sm  focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
 
@@ -32,7 +32,7 @@ export default function AddressForm({ address, onChange }) {
             type="text"
             value={address.unit}
             onChange={(e) => onChange('unit', e.target.value)}
-            className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="w-full p-2 h-8 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
 
@@ -45,7 +45,7 @@ export default function AddressForm({ address, onChange }) {
               type="text"
               value={address.city}
               onChange={(e) => onChange('city', e.target.value)}
-              className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              className="w-full p-2 h-8 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             />
           </div>
           <div>
@@ -56,7 +56,7 @@ export default function AddressForm({ address, onChange }) {
               type="text"
               value={address.state}
               onChange={(e) => onChange('state', e.target.value)}
-              className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              className="w-full p-2 h-8 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             />
           </div>
           <div className="col-span-2 md:col-span-1">
@@ -65,9 +65,9 @@ export default function AddressForm({ address, onChange }) {
             </label>
             <input
               type="text"
-              value={address.zip}
-              onChange={(e) => onChange('zip', e.target.value)}
-              className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              value={address.pincode}
+              onChange={(e) => onChange('pincode', e.target.value)}
+              className="w-full p-2 h-8 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             />
           </div>
         </div>

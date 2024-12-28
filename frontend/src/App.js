@@ -8,6 +8,7 @@ import Contact from './pages/Contact';
 import Booking from './pages/Booking';
 import AuthForm from './pages/AuthForm';
 import { EmployeeProfileForm } from './components/Auth/employee/EmployeeProfileForm';
+import ManageBookings from './components/Dashboard/Sections/ManageBookings';
 
 
 function App() {

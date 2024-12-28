@@ -116,29 +116,23 @@ export default function AuthForm() {
 
 
   useEffect(() => {
-    if (success) {
-      switch (role) {
-        case 'employee':
-          if (usersData?.employee.status === 'unregistered') {
-            console.log('navigate to ')
-            navigate('/employee/profile');
-            return;
-          }else{
-            navigate('/');
-          }
-          break;
-        case 'user':
-          navigate('/');
-          break;
-        case 'admin':
-          navigate('/');
-          break;
-        default:
-          console.error('Unexpected user type:', role);
 
+    if (usersData?.token) {
+
+      if(usersData?.employee)
+      {
+        if (usersData?.employee.status === 'unregistered') {
+          navigate('/employee/profile');
+        } else {
+          navigate('/');
+        }
+
+        return;
       }
+      navigate('/');
+
     }
-  }, [success,usersData])
+  }, [success, usersData?._id , usersData?.employee?._id])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">

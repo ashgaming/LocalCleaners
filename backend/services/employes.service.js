@@ -45,3 +45,17 @@ module.exports.createEmployesProfile = async ({
         throw new Error(err)
     }
 }
+
+module.exports.getEmployesAvailability = async ( ) => {
+     try {
+    
+            const employes = await employesModel.find().select('fullname').select('email').exec();
+    
+            return employes;
+    
+        } catch (error) {
+    
+            throw new Error(`Error fetching bookings: ${error.message}`);
+    
+        }
+ }  

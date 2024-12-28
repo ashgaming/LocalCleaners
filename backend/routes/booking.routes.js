@@ -7,36 +7,42 @@ const authMiddleware = require('../middlewares/auth.middleware')
 
 router.post('/create', authMiddleware.authUser ,[
   body('service').isString().withMessage('Service must be a string'), // Validate type
-  // Assuming time is a string in a specific format (e.g., "HH:MM")
-  body('time').matches(/^\d{2}:\d{2}$/).withMessage('Invalid time format (HH:MM required)'),
-  // Assuming date is a string in a specific format (e.g., "YYYY-MM-DD")
+  body('time').matches(/^(?:[0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9](?:\s?(?:AM|PM|am|pm))?$/).withMessage('Invalid time format (HH:MM AM/PM required)'),
   body('date').matches(/^\d{2}-\d{2}-\d{4}$/).withMessage('Invalid date format (DD-MM-YYYY required)'),
-  body('address.place').isString().withMessage('Place must be a string'), // Validate type
-  body('address.place').isLength({ min: 3 }).withMessage('Place must be at least 3 characters long'),
-  body('address.state').isString().withMessage('State must be a string'), // Validate type
-  body('address.state').isLength({ min: 3 }).withMessage('State must be at least 3 characters long'),
-  body('address.city').isString().withMessage('City must be a string'), // Validate type
-  body('address.city').isLength({ min: 3 }).withMessage('City must be at least 3 characters long'),
-  body('address.pincode').isString().withMessage('Pincode must be a string'), // Validate type
-  body('address.pincode').isLength({ min: 6, max: 6 }).withMessage('Pincode must be 6 digits long'),
-  body('ltd').isFloat().withMessage('Latitude must be a number'), 
-  body('lng').isFloat().withMessage('Longitude must be a number'), 
+  body('address').isString().withMessage('Place must be a string'), // Validate type
+  body('address').isLength({ min: 3 }).withMessage('Place must be at least 3 characters long'),
+  body('phoneNumber').isNumeric().isLength({ min: 10 , max:10 }).withMessage('Number requires'),
+  body('ltd').optional().isFloat().withMessage('Latitude must be a number'), 
+  body('lng').optional().isFloat().withMessage('Longitude must be a number'), 
 ], bookingController.CreateBookings)
 
-router.get('/accept', [
-    query('email').isEmail().withMessage('Invalid Email')],
+router.post('/accept', authMiddleware.authEmployes ,[
+    body('requestId').isMongoId().withMessage('Invalid requestId'),
+    body('selectedEmployee').isMongoId().withMessage('Invalid selectedEmployee'),
+  ],
+  bookingController.AssignEmployee
 )
 
 router.get('/confirm', [
     query('email').isEmail().withMessage('Invalid Email')],
 )
 
-router.get('/myBookings', authMiddleware.authUser ,  )
+router.get('/user-booking-list', authMiddleware.authUser ,  bookingController.ListUserBooking)
 
-router.get('/list-booking', authMiddleware.authUser , 
+router.get('/get-user-booking', authMiddleware.authUser , [
+  query('_id').isMongoId().withMessage('Id not found')
+] ,bookingController.GetUserBookingById)
+
+
+router.get('/upcoming-user-booking', authMiddleware.authUser , bookingController.UpcomingUserBookingList
 )
 
-router.get('/list-pending', authMiddleware.authUser , 
+router.get('/list-pending', authMiddleware.authEmployes , 
+  bookingController.ListAdminBooking
+)
+
+router.get('/list-bookings-Employee', authMiddleware.authEmployes , 
+  bookingController.ListBookingOfEmployee
 )
 
 module.exports = router;

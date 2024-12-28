@@ -20,7 +20,10 @@ export default function DateTimePicker({
   const dates = Array.from({ length: 14 }, (_, i) => {
     const date = new Date();
     date.setDate(date.getDate() + i);
-    return date.toISOString().split('T')[0];
+    return {
+      date:date.toISOString().split('T')[0],
+      in_date:date.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')
+    }
   });
 
   return (
@@ -31,10 +34,10 @@ export default function DateTimePicker({
           Select Date
         </label>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-          {dates.map((date) => (
+          {dates.map(({date,in_date}) => (
             <button
               key={date}
-              onClick={() => onDateChange(date)}
+              onClick={() => onDateChange(in_date)}
               className={`p-2 text-sm rounded-md text-center transition ${
                 selectedDate === date
                   ? 'bg-blue-600 text-white'

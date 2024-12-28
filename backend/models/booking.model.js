@@ -18,9 +18,10 @@ const BookingSchema = new moongose.Schema({
   
     BookingData: {
         date: {
-          type: Date,
-          required: true
-        },
+            type: String,
+            required: true,
+            match: /^\d{2}-\d{2}-\d{4}$/ 
+          },
         time: {
           type: String,
           required: true
@@ -40,7 +41,7 @@ const BookingSchema = new moongose.Schema({
 
     work_status: {
         type: String,
-        enum: ['pending', 'accepted', 'completed', 'cancel'],
+        enum: ['pending', 'ongoing', 'completed', 'cancel'],
         default: 'pending',
     },
 
