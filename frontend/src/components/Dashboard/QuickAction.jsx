@@ -1,26 +1,40 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const actions = [
-  {
-    title: 'Book New Cleaning',
-    description: 'Schedule your next cleaning service',
-    primary: true,
-    link: '/Booking'
-  },
-  {
-    title: 'View Schedule',
-    description: 'Check your upcoming appointments',
-    link: '/'
-  },
-  {
-    title: 'Support',
-    description: 'Get help with your bookings',
-    link: '/'
-  },
-];
+
 
 export default function QuickActions() {
+  const { user } = useSelector(state => state.userData)
+  const actions = [
+    !user?.employee?._id ? {
+      title: 'Book New Cleaning',
+      description: 'Schedule your next cleaning service',
+      primary: true,
+      link: '/Booking'
+    } : {
+      title: 'Watch Active Work',
+      description: 'Watch Your Active Work here',
+      primary: true,
+      link: '/active-work'
+    },
+    !user?.employee?._id ? {
+      title: 'View Schedule',
+      description: 'Check your upcoming appointments',
+      link: '/todays-booking'
+    } :
+      {
+        title: 'View Schedule',
+        description: 'Check your upcoming appointments',
+        link: '/todays-works'
+      },
+    {
+      title: 'Support',
+      description: 'Get help with your bookings',
+      link: '/Support'
+    },
+  ];
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {actions.map((action) => (

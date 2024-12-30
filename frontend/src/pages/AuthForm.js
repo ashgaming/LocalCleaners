@@ -22,8 +22,8 @@ export default function AuthForm() {
 
 
   const { loading: loadingRegister, user: usersRegister, error: errorRegister } = useSelector(state => state.userRegister)
-  const { loading: loadingLogin, user: usersLogin, error: errorLogin } = useSelector(state => state.userLogin)
-  const { loading: loadingData, token, user: usersData, error: errorData, success } = useSelector(state => state.userData)
+  const { loading: loadingLogin, user: usersLogin, error: errorLogin , success } = useSelector(state => state.userLogin)
+  const { loading: loadingData, token, user: usersData, error: errorData, usersSuccess } = useSelector(state => state.userData)
 
   const RoleButtons = [
     {
@@ -117,7 +117,7 @@ export default function AuthForm() {
 
   useEffect(() => {
 
-    if (usersData?.token) {
+    if (usersLogin?.token) {
 
       if(usersData?.employee)
       {

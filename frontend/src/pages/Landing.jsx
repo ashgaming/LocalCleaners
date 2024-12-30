@@ -3,8 +3,9 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Landing/Hero';
 import Features from '../components/Landing/Features';
 import ContactForm from '../components/Landing/ContactForm';
+import ElementLoader from '../components/ui/ELementLoader';
 
-export default function Landing() {
+const Landing = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -14,3 +15,5 @@ export default function Landing() {
     </div>
   );
 }
+
+export default Landing;

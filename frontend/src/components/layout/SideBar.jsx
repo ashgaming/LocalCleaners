@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, Settings, LogOut, Menu, User , BookIcon } from 'lucide-react';
+import { Calendar, Clock, Settings, LogOut, Menu, User, BookIcon } from 'lucide-react';
 import Header from './Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../redux/actions/UserActions';
@@ -7,27 +7,24 @@ import { logoutUser } from '../../redux/actions/UserActions';
 
 
 const Sidebar = (props) => {
-
-
-
-  const [active ,setActive] = useState('Bookings')
+  const [active, setActive] = useState('Bookings')
   const className = props.className
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dispatch = useDispatch()
 
-  const {user} = useSelector(state=>state.userData)
+  const { user } = useSelector(state => state.userData)
 
 
   const ManagerItems = [
     { icon: BookIcon, label: 'Manage' },
     { icon: User, label: 'Employees' },
   ];
-  
+
   const navItems = [
     { icon: Calendar, label: 'Bookings' },
     { icon: Clock, label: 'History' },
     { icon: Settings, label: 'Settings' },
-    ...(user?.employee?.role === 'Manager' ? ManagerItems : []), 
+    ...(user?.employee?.role === 'Manager' ? ManagerItems : []),
     { icon: LogOut, label: 'Logout' },
   ];
 
@@ -42,9 +39,6 @@ const Sidebar = (props) => {
     }
   }
 
-
-
-
   return (
     <div className={`bg-white shadow-lg ${className}`}>
       <div className="md:hidden flex items-center justify-between p-4">
@@ -54,7 +48,7 @@ const Sidebar = (props) => {
         </button>
       </div>
 
-      <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:block`}>
+      <div className={`${!isMobileMenuOpen ? 'block' : 'hidden'} md:block`}>
         <div className="hidden md:block">
           <Header />
         </div>
@@ -65,7 +59,7 @@ const Sidebar = (props) => {
               onClick={() =>
                 handleSectionClick(label)
               }
-              className={`flex items-center px-4 py-3 w-full ${ label === active ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'
+              className={`flex items-center px-4 py-3 w-full ${label === active ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'
                 }`}
             >
               <Icon className="h-5 w-5 mr-3" />

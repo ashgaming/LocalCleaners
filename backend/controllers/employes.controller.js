@@ -70,24 +70,24 @@ module.exports.loginEmployes = async (req, res, next) => {
 
     const hashedPassword = await employesModel.hashedPassword(password);
 
-    const employes = await employesModel.findOne({ email }).select('+password')
+    const employee = await employesModel.findOne({ email }).select('+password')
 
-    if (!employes) {
+    if (!employee) {
         return res.status(401).json({ message: 'Invalid email and password' })
     }
 
-    const isMatch = await employes.comparePassword(password);
+    const isMatch = await employee.comparePassword(password);
 
 
     if (!isMatch) {
         return res.status(401).json({ message: 'Invalid email and password' })
     }
 
-    const token = employes.generateAuthToken();
+    const token = employee.generateAuthToken();
     
     res.cookie('token',token);
 
-    res.status(201).json({ token, employes })
+    res.status(201).json({ token, employee })
 }
 
 module.exports.getEmployesProfile = async (req, res, next) => {
@@ -116,6 +116,67 @@ module.exports.getEmployesAvailability = async (req, res, next) => {
         const employes = await employesService.getEmployesAvailability()
 
         return res.status(200).json({ employes })
+
+    }catch(error){
+        return res.status(400).json({ errors : error })
+    }
+ }
+
+ 
+module.exports.VerifyBooking = async (req, res, next) => {
+
+    const error = validationResult(req)
+    if (!error.isEmpty()) {
+        return res.status(400).json({ errors: error.array() })
+    }
+
+    try{
+
+        const { _id , otp } = req.query
+
+        const verifyStatus = await employesService.VerifyBooking({employee:req.employee,_id,otp})
+
+        return res.status(200).json({ verifyStatus })
+
+    }catch(error){
+        return res.status(400).json({ errors : error })
+    }
+ }
+
+ module.exports.completePayment = async (req, res, next) => {
+
+    const error = validationResult(req)
+    if (!error.isEmpty()) {
+        return res.status(400).json({ errors: error.array() })
+    }
+
+    try{
+
+        const { _id , otp } = req.query
+
+        const verifyStatus = await employesService.completePayment({employee:req.employee,_id,otp})
+
+        return res.status(200).json({ verifyStatus })
+
+    }catch(error){
+        return res.status(400).json({ errors : error })
+    }
+ }
+
+ module.exports.completeWork = async (req, res, next) => {
+
+    const error = validationResult(req)
+    if (!error.isEmpty()) {
+        return res.status(400).json({ errors: error.array() })
+    }
+
+    try{
+
+        const { _id , otp } = req.query
+
+        const verifyStatus = await employesService.completeWork({employee:req.employee,_id})
+
+        return res.status(200).json({ verifyStatus })
 
     }catch(error){
         return res.status(400).json({ errors : error })

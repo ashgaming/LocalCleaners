@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Menu } from 'lucide-react';
-import Sidebar from '../components/layout/Sidebar';
-import BookingSection from '../components/Dashboard/Sections/BookingSection';
-import HistorySection from '../components/Dashboard/Sections/HistorySection';
-import SettingSection from '../components/Dashboard/Sections/SettingSection';
-import EmployeeSection from '../components/Dashboard/Sections/EmployeeSection';
 import { Link } from 'react-router-dom';
-import ManageBookings from '../components/Dashboard/Sections/ManageBookings';
 import { useSelector } from 'react-redux';
+import Sidebar from '../components/layout/Sidebar';
+import Wrapper from '../components/ui/Wrapper';
+const BookingSection = React.lazy(()=>import('../components/Dashboard/Sections/BookingSection'));
+const HistorySection = React.lazy(()=>import('../components/Dashboard/Sections/HistorySection'));
+const SettingSection = React.lazy(()=>import('../components/Dashboard/Sections/SettingSection'));
+const EmployeeSection =React.lazy(()=>import('../components/Dashboard/Sections/EmployeeSection'));
+const ManageBookings = React.lazy(()=>import('../components/Dashboard/Sections/ManageBookings'));
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -18,14 +19,13 @@ const Dashboard = () => {
     setOpenSection(section)
   }
 
-  const {user} = useSelector(state=>state.userData)
+  const { user } = useSelector(state => state.userData)
 
 
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Sidebar - hidden on mobile, shown on medium screens and up */}
       <Sidebar className="hidden md:block fixed w-64 h-full" selectSection={selectSection} />
-
       {/* Mobile header */}
       <div className="md:hidden w-full fixed top-0 bg-white z-50 px-4 py-2 shadow-sm">
         <div className="flex justify-between items-center">
@@ -38,21 +38,21 @@ const Dashboard = () => {
           }
           <Link to={`/login`}>
 
-          {
-            user?.employee?.profileImage ? 
-            <img
-            src={ user?.employee?.profileImage}
-            alt="Profile"
-            className="h-8 w-8 rounded-full"
-            /> 
-            :
-          <img
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          alt="Profile"
-          className="h-8 w-8 rounded-full"
-          />
-        }
-            </Link>
+            {
+              user?.employee?.profileImage ?
+                <img
+                  src={user?.employee?.profileImage}
+                  alt="Profile"
+                  className="h-8 w-8 rounded-full"
+                />
+                :
+                <img
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt="Profile"
+                  className="h-8 w-8 rounded-full"
+                />
+            }
+          </Link>
         </div>
       </div>
 
@@ -71,14 +71,14 @@ const Dashboard = () => {
       {/* Main Content */}
 
       <div className="md:ml-64 p-4 md:p-8 mt-16 md:mt-0">
-        {
-          (openSection === 'Bookings' && <BookingSection />) ||
-          (openSection === 'History' && <HistorySection />) ||
-          (openSection === 'Settings' && <SettingSection />) ||
-          (openSection === 'Employees' && <EmployeeSection />) ||
-          (openSection === 'Manage' && <ManageBookings title={`Manage Booking`}/>) 
 
-        }
+          {
+           (openSection === 'Bookings' && <Wrapper> <BookingSection /> </Wrapper>) ||
+            (openSection === 'History' && <Wrapper><HistorySection /></Wrapper>) ||
+            (openSection === 'Settings' && <Wrapper> <SettingSection /> </Wrapper>) ||
+            (openSection === 'Employees' && <Wrapper> <EmployeeSection /> /</Wrapper>) ||
+            (openSection === 'Manage' && <Wrapper> <ManageBookings title={`Manage Booking`} /> </Wrapper>)
+          }
 
       </div>
 

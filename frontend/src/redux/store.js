@@ -5,8 +5,8 @@ import {thunk} from 'redux-thunk';
 
 
 const initialState = {
-  userData: localStorage.getItem('token')? JSON.parse(localStorage.getItem('token')) : {
-    user: [],
+  userData:{
+    user: localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : [],
         loading: false,
         error: null,
         success: false,
