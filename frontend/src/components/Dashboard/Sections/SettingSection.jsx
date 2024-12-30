@@ -9,4 +9,4 @@ const SettingSection = () => {
   )
 }
 
-export default SettingSection
+export default SettingSection;

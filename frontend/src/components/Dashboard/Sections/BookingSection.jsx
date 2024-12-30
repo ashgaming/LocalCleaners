@@ -61,11 +61,11 @@ const BookingSection = () => {
       {
         user?.employee &&
         <div className="mt-8">
-          <BookingsList title={`Bookings `} bookings={booking} />
+          <BookingsList title={`Bookings `} bookings={booking.bookings} />
         </div>
       }
     </>
   )
 }
 
-export default BookingSection
+export default BookingSection;

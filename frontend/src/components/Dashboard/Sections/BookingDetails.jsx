@@ -3,11 +3,12 @@ import { X, CheckCircle, AlertCircle } from 'lucide-react';
 import AssignEmployeeForm from './AssignEmployeeForm';
 import RequestStatusBadge from './RequestStatusBadge';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 
 const BookingDetails = memo(({ booking, isOpen, onClose, setIsDetailsOpen }) => {
   const [status, setStatus] = useState(null);
-  const {user } = useSelector(state=>state.userData)
+  const { user } = useSelector(state => state.userData)
 
   console.log(booking)
   useEffect(() => {
@@ -25,7 +26,17 @@ const BookingDetails = memo(({ booking, isOpen, onClose, setIsDetailsOpen }) => 
 
   }
 
-  const OpenStartWorkPage = () => {
+
+  const HandleStartWork = (e) => {
+    e.preventDefault()
+   /* setIsDetailsOpen(false)
+    const date = new Date()
+    const activeWork = {
+      Start_Time: date,
+      Booking_id: booking?._id,
+    }*/
+
+ //   localStorage.setItem('activeWork', JSON.stringify(activeWork));
 
   }
 
@@ -112,9 +123,11 @@ const BookingDetails = memo(({ booking, isOpen, onClose, setIsDetailsOpen }) => 
 
                 {
                   user?.employee?._id === booking?.employee?._id &&
-                  <button className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={OpenStartWorkPage}
-                  >Start</button>
+                  <Link to={`/active-work`} className='w-full'>
+                    <button className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    //  onClick={e => HandleStartWork(e)}
+                    >Start</button>
+                  </Link>
                 }
               </div>
 

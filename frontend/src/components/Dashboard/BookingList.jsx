@@ -3,7 +3,7 @@ import BookingDetails from './Sections/BookingDetails';
 import RequestStatusBadge from './Sections/RequestStatusBadge';
 
 
-export default function BookingsList({ title, bookings }) {
+export default function BookingsList({ title = '', bookings = [] }) {
 
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isBookingDetailsOpen, setIsBookingDetailsOpen] = useState(false);
@@ -19,7 +19,7 @@ export default function BookingsList({ title, bookings }) {
     <div className="bg-white rounded-lg shadow p-4 md:p-6">
       <h2 className="text-xl font-semibold mb-4">{title}</h2>
       <div className="space-y-4">
-        {bookings.map((booking) => (
+        {bookings?.map((booking) => (
           <div
             key={booking?._id}
             onClick={() => HandleBookingDetails(booking)}

@@ -39,7 +39,10 @@ module.exports.createBooking = async ({
         },
 
         phoneNumber,
-        otp: getOtp(6),
+        otp: {
+            start_otp: getOtp(6),
+            end_otp: getOtp(6)       
+        },
         payment: {
             amount: getAmount(service)
         }
@@ -150,7 +153,44 @@ module.exports.ListBookingOfEmployee = async ({employee}) => {
 
     try {
 
-        const bookings = await bookingModel.find({ employee ,work_status: 'ongoing' }).populate('user').exec();
+        const bookings = await bookingModel.find({ employee ,work_status: 'ongoing' }).populate('user').populate('employee').exec();
+
+        return bookings;
+
+    } catch (error) {
+
+        throw new Error(`Error fetching bookings: ${error.message}`);
+
+    }
+};
+
+
+module.exports.GetBookingById = async ({ employee, _id }) => {
+    if (!employee || !_id) {
+        throw new Error('Employee and id not found');
+    }
+
+    try {
+        const booking = await bookingModel.findOne({ employee: employee._id, _id }).populate('user').populate('employee').exec();
+        return booking;
+    } catch (error) {
+        throw new Error(`Error fetching bookings: ${error.message}`);
+    }
+}
+
+module.exports.TodaysBookingsList = async () => {
+    const date = new Date()
+    const today = date.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')
+    try {
+
+        const bookings = await bookingModel.find(
+            { 
+                work_status: 'pending',
+                date:today
+            }
+        ).populate('user').
+        populate('employee').
+        exec();
 
         return bookings;
 

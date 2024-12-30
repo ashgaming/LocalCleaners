@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const { body } = require("express-validator")
+const { body ,query } = require("express-validator")
 const employesController = require('../controllers/employes.controller')
 const authMiddleware = require('../middlewares/auth.middleware')
 
@@ -33,5 +33,19 @@ router.get('/logout', authMiddleware.authEmployes, employesController.logoutEmpl
 
 router.get('/get-employee-list', authMiddleware.authEmployes, employesController.getEmployesAvailability)
 
+router.get('/verify-booking-otp', authMiddleware.authEmployes , [
+    query('_id').isMongoId().withMessage('Id not found'),
+    query('otp').isString().isLength({min:6 ,max:6}).withMessage('Id not found')
+  ] ,employesController.VerifyBooking)
+
+  router.get('/complete-Work', authMiddleware.authEmployes , [
+    query('_id').isMongoId().withMessage('Id not found'),
+    query('otp').isString().isLength({min:6 ,max:6}).withMessage('Id not found')
+  ] ,employesController.completeWork)
+
+  router.get('/confirm-payment', authMiddleware.authEmployes , [
+    query('_id').isMongoId().withMessage('Id not found'),
+    query('otp').isString().isLength({min:6 ,max:6}).withMessage('Id not found')
+  ] ,employesController.completePayment)
 
 module.exports = router;

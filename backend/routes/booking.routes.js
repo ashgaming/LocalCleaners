@@ -45,4 +45,13 @@ router.get('/list-bookings-Employee', authMiddleware.authEmployes ,
   bookingController.ListBookingOfEmployee
 )
 
+router.get('/get-booking-id', authMiddleware.authEmployes , [
+  query('_id').isMongoId().withMessage('Id not found')
+] ,bookingController.GetBookingById)
+
+
+
+router.get('/todays-booking' , bookingController.TodaysBookingsList
+)
+
 module.exports = router;

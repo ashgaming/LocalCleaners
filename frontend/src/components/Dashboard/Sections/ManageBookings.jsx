@@ -5,7 +5,7 @@ import Loader from '../../Auth/ui/Loader';
 import RequestsList from './RequestsList';
 
 
-export default function ManageBookings({ title }) {
+const ManageBookings = ({ title }) => {
   const dispatch = useDispatch()
 
   //  if (!bookings) return null;
@@ -66,3 +66,4 @@ export default function ManageBookings({ title }) {
   );
 }
 
+export default ManageBookings;
