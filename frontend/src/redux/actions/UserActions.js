@@ -32,9 +32,10 @@ export const getUserData = (type) => async (dispatch, navigate) => {
         const { data } = await axios.get(endpoints[type],
             config)
 
+        const date = new Date()
         dispatch({
             type: USER_DATA_SUCCESS,
-            payload: data
+            payload: {data , creatdOn : date.toLocaleDateString()}
         })
 
     }

@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { userDataReducer, userLoginReducer, userRegisterReducer , createEmployeeReducer } from "./reducers/UserReducers";
 import { createBookingReducer, deleteBookingReducer, listAvalableEmployesReducer, listBookingReducer, listMyBookingReducer, listPendingBookingReducer } from "./reducers/BookingReducer";
+import { createSubscriptionPlansReducer, createSubscriptionReducer, getSubscriptionPlanReducer, getSubscriptionReducer, subscriptionReducer } from "./reducers/SubscriptionReducers";
 
 const CombineReducers = combineReducers({
     userLogin:userLoginReducer,
@@ -14,7 +15,14 @@ const CombineReducers = combineReducers({
     listBooking : listBookingReducer,
     listMyBooking : listMyBookingReducer,
     listPendingBooking:listPendingBookingReducer,
-    listAvalableEmployes:listAvalableEmployesReducer
+    listAvalableEmployes:listAvalableEmployesReducer,
+
+    subscriptionInfo:subscriptionReducer,
+    getSubscriptionPlan:getSubscriptionPlanReducer,
+    createSubscription:createSubscriptionReducer,
+    getSubscription:getSubscriptionReducer,
+    createSubscriptionPlans:createSubscriptionPlansReducer,
+    
 
 });
 

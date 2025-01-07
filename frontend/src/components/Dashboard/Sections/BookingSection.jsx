@@ -47,9 +47,9 @@ const BookingSection = () => {
 
       <QuickActions />
 
-      <div className="mt-8">
+      {/* <div className="mt-8">
         <BookingsList title={`Upcoming Bookings `} bookings={upcomingBookings} />
-      </div>
+      </div> */}
 
       {
         !user?.employee &&

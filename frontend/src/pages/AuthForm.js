@@ -22,7 +22,7 @@ export default function AuthForm() {
 
 
   const { loading: loadingRegister, user: usersRegister, error: errorRegister } = useSelector(state => state.userRegister)
-  const { loading: loadingLogin, user: usersLogin, error: errorLogin , success } = useSelector(state => state.userLogin)
+  const { loading: loadingLogin, user: usersLogin, error: errorLogin, success } = useSelector(state => state.userLogin)
   const { loading: loadingData, token, user: usersData, error: errorData, usersSuccess } = useSelector(state => state.userData)
 
   const RoleButtons = [
@@ -51,7 +51,8 @@ export default function AuthForm() {
     email: '',
     password: '',
     firstname: '',
-    lastname: ''
+    lastname: '',
+    otp:''
   });
 
   const validateForm = (email, password, firstname, lastname) => {
@@ -119,8 +120,7 @@ export default function AuthForm() {
 
     if (usersLogin?.token) {
 
-      if(usersData?.employee)
-      {
+      if (usersData?.employee) {
         if (usersData?.employee.status === 'unregistered') {
           navigate('/employee/profile');
         } else {
@@ -132,7 +132,7 @@ export default function AuthForm() {
       navigate('/');
 
     }
-  }, [success, usersData?._id , usersData?.employee?._id])
+  }, [success, usersData?._id, usersData?.employee?._id])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
@@ -244,13 +244,25 @@ export default function AuthForm() {
             </button>
           </div>
 
-          {authMode === 'register' && (
+          {authMode === 'register' && role !== userType[2] &&  (
             <CustomInput
               label="Confirm Password"
               type={showPassword ? 'text' : 'password'}
               icon={Lock}
               required
               placeholder="Confirm your password"
+            />
+          )}
+
+          {authMode === 'register' && role === userType[2] && (
+            <CustomInput
+              label="Admin Register Password"
+              type={showPassword ? 'text' : 'password'}
+              icon={Lock}
+              value={formData.otp}
+              onChange={e => setFormData(prev => ({ ...prev, otp: e.target.value }))}
+              required
+              placeholder="Registration password"
             />
           )}
 

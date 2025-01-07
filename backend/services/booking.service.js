@@ -153,7 +153,9 @@ module.exports.ListBookingOfEmployee = async ({employee}) => {
 
     try {
 
-        const bookings = await bookingModel.find({ employee ,work_status: 'ongoing' }).populate('user').populate('employee').exec();
+        const bookings = await bookingModel.find({
+          //   employee ,
+             work_status: 'ongoing' }).populate('user').populate('employee').exec();
 
         return bookings;
 
