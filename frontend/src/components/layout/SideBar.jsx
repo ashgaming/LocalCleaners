@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, Settings, LogOut, Menu, User, BookIcon } from 'lucide-react';
+import { Calendar, Clock, Settings, LogOut, Menu, User, BookIcon, Album  } from 'lucide-react';
 import Header from './Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../redux/actions/UserActions';
@@ -24,6 +24,7 @@ const Sidebar = (props) => {
     { icon: Calendar, label: 'Bookings' },
     { icon: Clock, label: 'History' },
     { icon: Settings, label: 'Settings' },
+    { icon: Album, label: 'Subscription' },
     ...(user?.employee?.role === 'Manager' ? ManagerItems : []),
     { icon: LogOut, label: 'Logout' },
   ];

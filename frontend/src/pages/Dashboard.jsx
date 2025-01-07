@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Sidebar from '../components/layout/Sidebar';
+import Sidebar from '../components/layout/SideBar';
 import Wrapper from '../components/ui/Wrapper';
+import SubscriptionSection from '../components/Dashboard/Sections/SubscriptionSection';
 const BookingSection = React.lazy(()=>import('../components/Dashboard/Sections/BookingSection'));
 const HistorySection = React.lazy(()=>import('../components/Dashboard/Sections/HistorySection'));
 const SettingSection = React.lazy(()=>import('../components/Dashboard/Sections/SettingSection'));
@@ -71,12 +72,12 @@ const Dashboard = () => {
       {/* Main Content */}
 
       <div className="md:ml-64 p-4 md:p-8 mt-16 md:mt-0">
-
           {
            (openSection === 'Bookings' && <Wrapper> <BookingSection /> </Wrapper>) ||
             (openSection === 'History' && <Wrapper><HistorySection /></Wrapper>) ||
             (openSection === 'Settings' && <Wrapper> <SettingSection /> </Wrapper>) ||
             (openSection === 'Employees' && <Wrapper> <EmployeeSection /> /</Wrapper>) ||
+            (openSection === 'Subscription' && <Wrapper> <SubscriptionSection /> /</Wrapper>) ||
             (openSection === 'Manage' && <Wrapper> <ManageBookings title={`Manage Booking`} /> </Wrapper>)
           }
 

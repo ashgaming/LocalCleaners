@@ -2,10 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Check } from 'lucide-react';
-import { setSelectedPlan } from '../../redux/actions/SubscriptionActions'; 
+import { setSelectedPlan } from '../store/subscriptionSlice';
 
 
-const PricingCard = ({ plan }) => {
+
+export const PricingCard = ({ plan }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,5 +39,3 @@ const PricingCard = ({ plan }) => {
     </div>
   );
 }
-
-export default PricingCard;

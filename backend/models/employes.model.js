@@ -64,7 +64,7 @@ const employesSchema = new mongoose.Schema({
 
     role : {
         type:String,
-        enum:['manager','owner','employee','helper'],
+        enum:['manager','owner','employee','helper','admin'],
         required:true,
     }
 

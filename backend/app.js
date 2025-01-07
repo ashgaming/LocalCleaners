@@ -11,6 +11,10 @@ const userRoutes = require('./routes/user.routes');
 const employesRoutes = require('./routes/employes.routes')
 const imageRoutes = require('./routes/image.routes')
 const bookingRoutes = require('./routes/booking.routes')
+const subscriptionRoutes = require('./routes/subscription.routes')
+const feedbackRoutes = require('./routes/feedback.routes')
+const plansRoutes = require('./routes/plans.routes')
+const adminRoutes = require('./routes/admin.routes')
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
@@ -41,6 +45,10 @@ app.use('/users', userRoutes);
 app.use('/employes', employesRoutes);
 app.use('/image', imageRoutes);
 app.use('/bookings', bookingRoutes);
+app.use('/subscriptions', subscriptionRoutes);
+app.use('/feedbacks', feedbackRoutes);
+app.use('/plans', plansRoutes);
+app.use('/admin', adminRoutes);
 
 
 module.exports = app;

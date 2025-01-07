@@ -58,3 +58,36 @@ module.exports.authEmployes = async (req, res, next) => {
         return res.status(401).json({ message: "Unauthorized" });
     }
 }
+
+module.exports.authAdmin = async (req, res, next) => {
+    const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        console.log('token not found')
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const isBlacklisted = await blacklistTokenModel.findOne({ token: token });
+
+    if (isBlacklisted) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        const emp = await employesModel.findById(decoded._id);
+
+
+        if(emp.role === 'admin'){
+
+            req.admin = emp;
+            
+            return next();
+        }else{       
+            res.status(401).json({ message: "Unauthorized" })
+        }
+    }
+    catch (error) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+}

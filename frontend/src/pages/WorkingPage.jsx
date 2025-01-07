@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Sidebar from '../components/layout/Sidebar'
+import Sidebar from '../components/layout/SideBar'
 import { useSelector } from 'react-redux';
 import { Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
