@@ -50,8 +50,19 @@ const employesSchema = new mongoose.Schema({
         }
     },
 
+    phoneNumber:{
+        type:String,
+        default:''
+    },
+
     salary:{
-        type :Number
+        type :Number,
+        default:0
+    },
+
+    lastpay:{
+        type:String,
+        default:''
     },
     
     experience:{
@@ -72,7 +83,7 @@ const employesSchema = new mongoose.Schema({
 })
 
 employesSchema.methods.generateAuthToken = function () {
-    const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET, { expiresIn: '24h' })
+    const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET, { expiresIn: '99h' })
     return token;
 }
 

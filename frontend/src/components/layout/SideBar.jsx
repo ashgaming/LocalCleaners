@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, Settings, LogOut, Menu, User, BookIcon, Album  } from 'lucide-react';
+import { Calendar, Clock, Settings, LogOut, Menu, User, BookIcon, Album, User2  } from 'lucide-react';
 import Header from './Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../redux/actions/UserActions';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -11,8 +12,9 @@ const Sidebar = (props) => {
   const className = props.className
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const { user } = useSelector(state => state.userData)
+  const { user , success } = useSelector(state => state.userData)
 
 
   const ManagerItems = [
@@ -26,15 +28,19 @@ const Sidebar = (props) => {
     { icon: Settings, label: 'Settings' },
     { icon: Album, label: 'Subscription' },
     ...(user?.employee?.role === 'Manager' ? ManagerItems : []),
-    { icon: LogOut, label: 'Logout' },
+    ...(user?.employee?.role === 'admin' ? [ { icon: User2, label: 'Admin' }] : []),
+    ...(user?.token ?[ { icon: LogOut, label: 'Logout' }] :[ { icon: LogOut, label: 'Login' }]),
   ];
 
   const handleSectionClick = (section) => {
 
     if (section === 'Logout') {
-      console.log(section)
       dispatch(logoutUser())
-    } else {
+    } else if (section === 'Login') {
+      navigate('/login')
+    }  else if (section === 'Admin') {
+      navigate('/admin')
+    }else {
       setActive(section)
       props.selectSection(section)
     }

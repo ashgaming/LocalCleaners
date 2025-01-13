@@ -37,8 +37,8 @@ const Dashboard = () => {
           {
             user?.email?.slice(0, -10)
           }
-          <Link to={`/login`}>
 
+          <Link to={`/login`}>
             {
               user?.employee?.profileImage ?
                 <img
@@ -77,7 +77,7 @@ const Dashboard = () => {
             (openSection === 'History' && <Wrapper><HistorySection /></Wrapper>) ||
             (openSection === 'Settings' && <Wrapper> <SettingSection /> </Wrapper>) ||
             (openSection === 'Employees' && <Wrapper> <EmployeeSection /> /</Wrapper>) ||
-            (openSection === 'Subscription' && <Wrapper> <SubscriptionSection /> /</Wrapper>) ||
+            (openSection === 'Subscription' && <Wrapper> <SubscriptionSection /> </Wrapper>) ||
             (openSection === 'Manage' && <Wrapper> <ManageBookings title={`Manage Booking`} /> </Wrapper>)
           }
 

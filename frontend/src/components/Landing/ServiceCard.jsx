@@ -3,7 +3,7 @@ import { Check } from 'lucide-react';
 
 
 
-export default function ServiceCard({ title, description, features, image }) {
+const ServiceCard = ({ title, description, features, image }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <img src={image} alt={title} className="w-full h-48 object-cover" />
@@ -22,3 +22,5 @@ export default function ServiceCard({ title, description, features, image }) {
     </div>
   );
 }
+
+export default ServiceCard;

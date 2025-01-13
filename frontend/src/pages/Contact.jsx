@@ -1,25 +1,25 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/layout/Navbar';
 import { MapPin, Phone, Mail } from 'lucide-react';
 
 const contactInfo = [
   {
     icon: Phone,
     title: 'Phone',
-    content: '+1 (555) 123-4567',
-    link: 'tel:+15551234567',
+    content: '+91 7666794337',
+    link: 'tel:+917666794337',
   },
   {
     icon: Mail,
     title: 'Email',
-    content: 'support@cleancasa.com',
-    link: 'mailto:support@cleancasa.com',
+    content: 'support@localCleners.com',
+    link: 'mailto:support@localCleners.com',
   },
   {
     icon: MapPin,
     title: 'Address',
-    content: '123 Cleaning Street, City, State 12345',
-    link: 'https://maps.google.com',
+    content: 'Old Sangvi Pune 411027',
+    link: 'https://maps.app.goo.gl/5iJcN3cAWyrDWYLc8',
   },
 ];
 

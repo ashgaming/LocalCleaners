@@ -1,6 +1,5 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import ServiceCard from '../components/Landing/ServiceCard';
+import ServiceCard from './ServiceCard';
 
 const services = [
   {
@@ -38,10 +37,10 @@ const services = [
   },
 ];
 
-export default function Services() {
+const Services = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+    
       <div className="pt-20 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -60,3 +59,5 @@ export default function Services() {
     </div>
   );
 }
+
+export default Services;

@@ -19,6 +19,7 @@ router.post('/register/profile',
     body('address').isLength({ min: 3 }).withMessage('color must be 3 letter long'),
     body('profileImage').isLength({ min: 3 }).withMessage('plate must be 3 letter long'),
     body('experience').isNumeric().withMessage('Capacity must be a positive number'),
+    body('phoneNumber').isString().withMessage('Invalid Phone Number'),
 ], employesController.registerEmployesProfile)
 
 router.post('/login', [

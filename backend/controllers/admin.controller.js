@@ -71,6 +71,10 @@ module.exports.loginAdmin = async (req, res, next) => {
     res.status(201).json({ token, employee })
 }
 
+module.exports.getAdminProfile = async (req, res, next) => {
+    res.status(200).json({ admin : req.admin});
+}
+
 
 module.exports.employesList = async (req, res, next) => {
     try{
@@ -80,12 +84,73 @@ module.exports.employesList = async (req, res, next) => {
         return res.status(400).json({ errors: error.array() })
     }
 
-    const hashedPassword = await employesModel.hashedPassword(password);
-
     const employee = await adminService.employesList()
 
 
     res.status(201).json({ employee })
+    }
+    catch(error){
+        return res.status(500).json({ message: 'Internal server error',error })
+    }
+}
+
+
+module.exports.employesDetails = async (req, res, next) => {
+    try{
+        
+        const error = validationResult(req)
+        if (!error.isEmpty()) {
+            return res.status(400).json({ errors: error.array() })
+        }
+
+        const {_id} = req.query;
+    
+    
+        const employee = await adminService.employesDetails({_id})
+    
+    
+        res.status(201).json({ employee })
+        }
+        catch(error){
+            return res.status(500).json({ message: 'Internal server error',error })
+        }
+ }
+
+
+
+module.exports.usersDetails = async (req, res, next) => {
+    try{
+        
+        const error = validationResult(req)
+        if (!error.isEmpty()) {
+            return res.status(400).json({ errors: error.array() })
+        }
+    
+        const {_id} = req.query;
+    
+        const user = await adminService.usersDetails({_id})
+    
+    
+        res.status(201).json({ user })
+        }
+        catch(error){
+            return res.status(500).json({ message: 'Internal server error',error })
+        }
+ }
+
+
+module.exports.usersList = async (req, res, next) => {
+    try{
+        
+    const error = validationResult(req)
+    if (!error.isEmpty()) {
+        return res.status(400).json({ errors: error.array() })
+    }
+
+
+    const users = await adminService.usersList()
+
+    res.status(201).json({ users })
     }
     catch(error){
         return res.status(500).json({ message: 'Internal server error',error })
