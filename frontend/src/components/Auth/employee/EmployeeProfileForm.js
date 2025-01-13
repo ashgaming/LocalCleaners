@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Clock, Book, Upload, Home
+  Clock, Book, Upload, Home,
+  Phone
 } from 'lucide-react';
 import CustomInput from '../ui/CustomInput';
 import CustomButton from '../ui/CustomButton';
@@ -13,29 +14,28 @@ import Loader from '../ui/Loader';
 
 
 
-export function EmployeeProfileForm() {
+const EmployeeProfileForm = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loadingUpload, setLoadingUpload] = useState(false)
   const [uploadError, setUploadError] = useState(false)
 
-  const { loading, error, success, profile: emp } = useSelector(state => state.createEmployee)
-  const { user } = useSelector(state=>state.userData)
+  const { loading, error, profile: emp } = useSelector(state => state.createEmployee)
+  const { user , success } = useSelector(state=>state.userData)
 
 
   const [profile, setProfile] = useState({
     address: '',
     profileImage: '',
     experience: '',
+    phoneNumber:''
     //  skills: [],
     //  bio: ''
   });
 
   useEffect(() => {
     if (success) {
-
-      console.log(emp)
       if ( user.employee?.status === 'unregistered' ) {
         alert('Please create yoir profile')
       } else {
@@ -81,7 +81,6 @@ export function EmployeeProfileForm() {
         }
       });
 
-      console.log(response.data.image)
 
       if (response.status === 201) {
         setUploadError(false);
@@ -117,17 +116,17 @@ export function EmployeeProfileForm() {
               required
             />
 
-            {/*
+            {
             <CustomInput
             label="Phone Number"
             icon={Phone}
             type="tel"
-            placeholder="+1 (555) 000-0000"
-            value={profile.phone}
-            onChange={e => setProfile(prev => ({ ...prev, phone: e.target.value }))}
+            placeholder="9584548484"
+            value={profile.phoneNumber}
+            onChange={e => setProfile(prev => ({ ...prev, phoneNumber: e.target.value }))}
             required
             />
-            */}
+            }
 
 
 
@@ -215,3 +214,5 @@ export function EmployeeProfileForm() {
     </div>
   );
 }
+
+export default EmployeeProfileForm;

@@ -60,23 +60,26 @@ export const userRegisterReducer = (state =
                 error: null,
                 success: null,
             };
-        case USER_REGISTER_SUCCESS:
-            return {
-                ...state,
-                loading: false,
-                user: action.payload,
-            };
-        case USER_REGISTER_ERROR:
-            return {
-                ...state,
-                loading: false,
-                error: action.payload,
-            };
-        case USER_REGISTER_RESET:
-            return {
-                ...state,
-                user: [],
-                loading: false,
+            case USER_REGISTER_SUCCESS:
+                return {
+                    ...state,
+                    loading: false,
+                    user: action.payload,
+                    success: true,
+                };
+                case USER_REGISTER_ERROR:
+                    return {
+                        ...state,
+                        loading: false,
+                        error: action.payload,
+                        success: false,
+                    };
+                    case USER_REGISTER_RESET:
+                        return {
+                            ...state,
+                            user: [],
+                            loading: false,
+                            success: false,
                 error: null,
             };
         default:

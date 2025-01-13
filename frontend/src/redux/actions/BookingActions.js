@@ -201,7 +201,7 @@ export const listBooking = () => async (dispatch) => {
         })
 
 
-        const { data } = await axios.get(`${BACKEND_URL}/bookings//list-bookings-Employee`,
+        const { data } = await axios.get(`${BACKEND_URL}/bookings/list-bookings-Employee`,
             {
                 headers: {
                     'Content-type': 'application/json',

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/layout/Navbar';
 import PricingCard from '../components/Landing/PricingCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSubscriptionPlan } from '../redux/actions/SubscriptionActions';
+import { getSubscriptionPlan } from '../redux/actions/AdminActions';
 import { GET_SUBSCRIPTION_PLAN_SUCCESS } from '../redux/constants/SubscriptionConstants';
 
 const Pricing = () => {

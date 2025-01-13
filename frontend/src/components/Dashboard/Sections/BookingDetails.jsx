@@ -10,7 +10,6 @@ const BookingDetails = memo(({ booking, isOpen, onClose, setIsDetailsOpen }) => 
   const [status, setStatus] = useState(null);
   const { user } = useSelector(state => state.userData)
 
-  console.log(booking)
   useEffect(() => {
     if (status == 'success') {
       const timer = setTimeout(() => {

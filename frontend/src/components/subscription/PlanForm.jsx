@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createSubscriptionPlans } from '../../redux/actions/SubscriptionActions';
+import { createSubscriptionPlans } from '../../redux/actions/AdminActions';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function PlanForm() {

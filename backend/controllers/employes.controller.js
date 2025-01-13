@@ -40,7 +40,7 @@ module.exports.registerEmployesProfile = async (req, res, next) => {
         return res.status(400).json({ errors: error.array() })
     }
     
-    const { address , profileImage , experience } = req.body
+    const { address , profileImage , experience , phoneNumber} = req.body
 
     const isEmployesAlreadyExist = await employesModel.findOne({email:req.employee.email}).exec();
     
@@ -53,6 +53,7 @@ module.exports.registerEmployesProfile = async (req, res, next) => {
         address,
         profileImage,
         experience,
+        phoneNumber
     });
 
 

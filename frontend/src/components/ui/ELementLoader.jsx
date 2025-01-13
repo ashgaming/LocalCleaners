@@ -11,7 +11,7 @@ const ElementLoader = () => {
         >
           <defs>
             <linearGradient id="pl-grad" x1="0" x2="1" y1="0" y2="1">
-              <stop offset="0%" stopColor="black" />
+              <stop offset="0%" stopColor="blue" /> {/* Set stopColor to blue */}
               <stop offset="100%" stopColor="white" />
             </linearGradient>
             <mask id="pl-mask">
@@ -22,24 +22,26 @@ const ElementLoader = () => {
             <g className="origin-center animate-spin-slow">
               <g transform="translate(20,20) rotate(0,44,44)">
                 <g>
-                  <rect width="40" height="40" rx="8" ry="8" />
+                  <rect width="40" height="40" rx="8" ry="8" fill="blue" /> {/* Set fill to blue */}
                   <rect
                     width="40"
                     height="40"
                     rx="8"
                     ry="8"
                     transform="translate(0,48)"
-                  />
+                    fill="blue"
+                  /> {/* Set fill to blue */}
                 </g>
                 <g transform="rotate(180,44,44)">
-                  <rect width="40" height="40" rx="8" ry="8" />
+                  <rect width="40" height="40" rx="8" ry="8" fill="blue" /> {/* Set fill to blue */}
                   <rect
                     width="40"
                     height="40"
                     rx="8"
                     ry="8"
                     transform="translate(0,48)"
-                  />
+                    fill="blue"
+                  /> {/* Set fill to blue */}
                 </g>
               </g>
             </g>
@@ -48,24 +50,26 @@ const ElementLoader = () => {
             <g className="origin-center animate-spin-slow">
               <g transform="translate(20,20) rotate(0,44,44)">
                 <g>
-                  <rect width="40" height="40" rx="8" ry="8" />
+                  <rect width="40" height="40" rx="8" ry="8" fill="blue" /> {/* Set fill to blue */}
                   <rect
                     width="40"
                     height="40"
                     rx="8"
                     ry="8"
                     transform="translate(0,48)"
-                  />
+                    fill="blue"
+                  /> {/* Set fill to blue */}
                 </g>
                 <g transform="rotate(180,44,44)">
-                  <rect width="40" height="40" rx="8" ry="8" />
+                  <rect width="40" height="40" rx="8" ry="8" fill="blue" /> {/* Set fill to blue */}
                   <rect
                     width="40"
                     height="40"
                     rx="8"
                     ry="8"
                     transform="translate(0,48)"
-                  />
+                    fill="blue"
+                  /> {/* Set fill to blue */}
                 </g>
               </g>
             </g>

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/layout/Navbar';
 import ServiceSelection from '../components/Booking/ServiceSelection';
 import DateTimePicker from '../components/Booking/DateTimePicker';
 import AddressForm from '../components/Booking/AddressForm';

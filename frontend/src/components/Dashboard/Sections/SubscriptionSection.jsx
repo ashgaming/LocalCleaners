@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import RequestStatusBadge from './RequestStatusBadge';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../Auth/ui/Loader';
-import { getSubscription, getSubscriptionPlan } from '../../../redux/actions/SubscriptionActions';
+import { getSubscription } from '../../../redux/actions/SubscriptionActions';
 import PlanForm from '../../subscription/PlanForm';
+import { getSubscriptionPlan } from '../../../redux/actions/AdminActions';
 
 const SubscriptionSection = () => {
     const dispatch = useDispatch();
@@ -67,18 +68,6 @@ const SubscriptionSection = () => {
 
             }
 
-            {(user?.employee?.role === 'admin' || 'employee') &&
-                <div className="bg-white rounded-lg shadow p-4 mt-3 md:p-6">
-                    <h2 className="text-xl font-semibold mb-4">Create Services</h2>
-                    <button onClick={()=>setIsFormVisible(!isFormVisible)}> \/ </button>
-                    {
-                        isFormVisible &&
-                        <div className="space-y-4">
-                            <PlanForm />
-                        </div>
-                    }
-                </div>
-            }
 
             {(user?.employee?.role === 'admin' || 'employee') &&
                 <div className="bg-white rounded-lg shadow p-4 mt-3 md:p-6">

@@ -23,12 +23,12 @@ module.exports.createEmployes = async ({
 
 
 module.exports.createEmployesProfile = async ({
-    email, address, profileImage, experience,
+    email, address, profileImage, experience,phoneNumber,
 }) => {
 
     try {
 
-        if (!address || !profileImage || !experience) {
+        if (!address || !profileImage || !experience || !phoneNumber) {
             throw new Error('All fiels are required');
         }
 
@@ -38,6 +38,7 @@ module.exports.createEmployesProfile = async ({
             address,
             profileImage,
             experience,
+            phoneNumber,
             status: 'active'
         })
 
