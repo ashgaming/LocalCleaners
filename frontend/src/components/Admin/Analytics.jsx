@@ -25,8 +25,8 @@ const Analytics = () => {
     { month: 'Feb', sales: 48000, customers: 145, timestamp: '2024-02-29' },
     { month: 'Mar', sales: 64000, customers: 180, timestamp: '2024-03-31' },
     { month: 'Apr', sales: 75000, customers: 210, timestamp: '2024-04-30' },
-    { month: 'May', sales: 95000, customers: 260, timestamp: '2024-05-31' },
-    { month: 'Jun', sales: 112000, customers: 290, timestamp: '2024-06-30' },
+    { month: 'May', sales: 85000, customers: 260, timestamp: '2024-05-31' },
+    { month: 'Jun', sales: 91200, customers: 290, timestamp: '2024-06-30' },
   ];
 
   const regionalData = [
@@ -39,16 +39,16 @@ const Analytics = () => {
   const customerRetentionData = [
     { month: 'Jan', newCustomers: 80, returning: 40, timestamp: '2024-01-31' },
     { month: 'Feb', newCustomers: 95, returning: 50, timestamp: '2024-02-29' },
-    { month: 'Mar', newCustomers: 120, returning: 60, timestamp: '2024-03-31' },
-    { month: 'Apr', newCustomers: 140, returning: 70, timestamp: '2024-04-30' },
-    { month: 'May', newCustomers: 160, returning: 100, timestamp: '2024-05-31' },
-    { month: 'Jun', newCustomers: 180, returning: 110, timestamp: '2024-06-30' },
+    { month: 'Mar', newCustomers: 12, returning: 60, timestamp: '2024-03-31' },
+    { month: 'Apr', newCustomers: 14, returning: 70, timestamp: '2024-04-30' },
+    { month: 'May', newCustomers: 16, returning: 100, timestamp: '2024-05-31' },
+    { month: 'Jun', newCustomers: 18, returning: 110, timestamp: '2024-06-30' },
   ];
 
   const COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'];
 
   return (
-    <div className="p-6">
+    <div className="p-6 overflow-hidden">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Analytics Overview</h2>
         <div className="flex items-center text-gray-500">
