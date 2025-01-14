@@ -4,14 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function PlanForm() {
     const [featureCount, setFeatureCount] = useState(4)
-    const [formData, setFormData] = useState({
+    const initialFormData = {
         id: '',
         name: '',
         price: 999,
         description: '',
         features: [],
         duration: 'day',
-    });
+    }
+    const [formData, setFormData] = useState(initialFormData);
 
 
     const dispatch = useDispatch();
@@ -24,19 +25,8 @@ export default function PlanForm() {
 
     useEffect(() => {
         if (success) {
-            setFormData({
-                id: '',
-                name: '',
-                price: 999,
-                description: '',
-                features: [],
-                duration: 'day',
-            })
-
-
             alert('Service Addes sussesfully...!')
         }
-
 
     }, [success])
 
@@ -181,7 +171,20 @@ export default function PlanForm() {
                         <option value="year">Year</option>
                     </select>
 
+
+
                 </div>
+            </div>
+
+            <div className="flex justify-end">
+                <button
+                    type="button"
+                    onClick={() => setFormData(initialFormData)}
+                    disabled={loading}
+                    className="bg-yellow-600 text-white py-2 px-4 rounded-md hover:bg-yellow-700 transition duration-200"
+                >
+                    Clear
+                </button>
             </div>
 
             <button
