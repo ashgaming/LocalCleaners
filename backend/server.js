@@ -1,6 +1,6 @@
 const http = require('http');
 const app = require('./app');
-const { initializeSocket } = require('./socket');
+//const { initializeSocket } = require('./socket');
 const port = process.env.PORT || 4000;
 const cluster = require('cluster');
 const os = require('os');
@@ -24,7 +24,7 @@ if (cluster.isMaster) {
 
     const server = http.createServer(app);
 
-  //  initializeSocket(server);
+    //  initializeSocket(server);
     // Start the server
     server.listen(port, () => {
         console.log(`Worker ${process.pid} is listening on port ${port}`);

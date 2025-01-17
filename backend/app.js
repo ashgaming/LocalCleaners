@@ -24,9 +24,6 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECREATE
 });
 
-
-
-
 connectToDB();
 
 // Middleware to serve static files
