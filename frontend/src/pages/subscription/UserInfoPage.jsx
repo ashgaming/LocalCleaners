@@ -11,7 +11,6 @@ const UserInfoPage = () => {
     const navigate = useNavigate();
     const { selectedPlan, firstname, lastname, email, countryCode, phoneNumber, street, house, state, city, pincode, months } = useSelector((state) => state.subscriptionInfo);
 
-
     const {
         subscription = [],
         loading,
@@ -19,8 +18,14 @@ const UserInfoPage = () => {
         success,
     } = useSelector((state) => state.createSubscription);
 
+    useEffect(()=>{
+        if (success) {
+            navigate(`/checkout/${subscription?._id}`);
+        }
+    },[success])
+
     if (!selectedPlan) {
-        navigate('/pricing');
+        navigate('/services');
         return null;
     }
 
@@ -94,25 +99,30 @@ const UserInfoPage = () => {
             email,
             countryCode,
             phoneNumber,
+            duration:months,
             start_date,
             end_date,
             address: `${house} ${street} ${city} ${state} ${pincode}`
         }
 
+        localStorage.setItem('subscriberInfo',JSON.stringify({
+            firstname, lastname, email, countryCode, phoneNumber, street, house, state, city, pincode
+        }))
+
         await dispatch(createSubscription(fdata))
 
-        if (success) {
-            navigate('/checkout');
-        }
+      
 
     };
+
+  
 
     return (
         <div className="min-h-screen bg-gray-50 py-12 px-4">
             <div className="max-w-lg mx-auto">
 
                 <div className="mb-6">
-                    <BackButton to="/pricing" />
+                    <BackButton to="/services" />
                     {loading && <ElementLoader />}
 
                 </div>

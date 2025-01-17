@@ -12,12 +12,14 @@ module.exports.CreateSubscription = async (req, res, next) => {
         }
 
         const { address, service, start_date , end_date,countryCode , phoneNumber ,id , email, duration } = req.body
-
+        
+        console.log('user :' , req.user )
         
         const isSubscriptionAlreadyExist = await subscriptionModel.findOne({
             user: req.user,
             service: id,
         }).exec();
+
 
         if (isSubscriptionAlreadyExist) {
             return res.status(400).json({ errors: "Subscription already exist" })

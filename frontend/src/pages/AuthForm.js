@@ -21,9 +21,14 @@ export default function AuthForm() {
   const [showPassword, setShowPassword] = useState(false);
 
 
-  const { loading: loadingRegister, user: usersRegister, error: errorRegister } = useSelector(state => state.userRegister)
+  const { loading: loadingRegister,
+    // user: usersRegister,
+      error: errorRegister 
+    } = useSelector(state => state.userRegister)
   const { loading: loadingLogin, user: usersLogin, error: errorLogin, success } = useSelector(state => state.userLogin)
-  const { loading: loadingData, token, user: usersData, error: errorData, usersSuccess } = useSelector(state => state.userData)
+  const { loading: loadingData,  user: usersData,
+   //  error: errorData, usersSuccess 
+    } = useSelector(state => state.userData)
 
   const RoleButtons = [
     {
@@ -56,31 +61,25 @@ export default function AuthForm() {
   });
 
   const validateForm = (email, password, firstname, lastname) => {
-    //  const { email, password, firstname , lastname } = this.state;
-    console.log(email, password, firstname, lastname)
 
     // Basic validation
     if (!email || !password) {
       return false; // Or throw an error
-      console.log('hit 0')
     }
 
     // Email validation (basic regex check)
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return false; // Or throw an error
-      console.log('hit 1')
     }
 
     // Password validation (minimum length, etc.)
     if (password.length < 8) {
       return false; // Or throw an error
-      console.log('hit 2')
     }
 
     if (authMode === 'register') {
       if (!firstname || !lastname) {
-        console.log('hit here')
         return false; // Or throw an error
       }
     }
@@ -132,7 +131,7 @@ export default function AuthForm() {
       navigate('/');
 
     }
-  }, [success, usersData?._id, usersData?.employee?._id])
+  }, [success,usersData?._id, usersData?.employee?._id])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">

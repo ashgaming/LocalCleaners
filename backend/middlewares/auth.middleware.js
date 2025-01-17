@@ -18,8 +18,6 @@ module.exports.authUser = async (req, res, next) => {
             return res.status(401).json({ message: "Unauthorized" });
         }
 
-        console.log(process.env.JWT_SECRET)
-
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await userModel.findById(decoded._id);
 
@@ -27,7 +25,6 @@ module.exports.authUser = async (req, res, next) => {
         next();
     }
     catch (error) {
-        console.log(error)
         return res.status(401).json({ message: "Unauthorized" });
     }
 }
@@ -35,7 +32,6 @@ module.exports.authUser = async (req, res, next) => {
 module.exports.authEmployes = async (req, res, next) => {
     const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
     if (!token) {
-        console.log('token not found')
         return res.status(401).json({ message: "Unauthorized" });
     }
 
@@ -62,7 +58,6 @@ module.exports.authEmployes = async (req, res, next) => {
 module.exports.authAdmin = async (req, res, next) => {
     const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
     if (!token) {
-        console.log('token not found')
         return res.status(401).json({ message: "Unauthorized" });
     }
 

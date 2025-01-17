@@ -7,28 +7,28 @@ import {
     LIST_BOOKING_REQUEST,
     LIST_BOOKING_SUCCESS,
     LIST_BOOKING_ERROR,
-    LIST_BOOKING_RESET,
+   // LIST_BOOKING_RESET,
 
 
     LIST_PENDING_BOOKING_REQUEST,
     LIST_PENDING_BOOKING_SUCCESS,
     LIST_PENDING_BOOKING_ERROR,
-    LIST_PENDING_BOOKING_RESET,
+ //   LIST_PENDING_BOOKING_RESET,
 
     LIST_MY_BOOKING_REQUEST,
     LIST_MY_BOOKING_SUCCESS,
     LIST_MY_BOOKING_ERROR,
-    LIST_MY_BOOKING_RESET,
+//    LIST_MY_BOOKING_RESET,
 
-    DELETE_BOOKING_REQUEST,
-    DELETE_BOOKING_SUCCESS,
-    DELETE_BOOKING_RESET,
-    DELETE_BOOKING_ERROR,
+//   DELETE_BOOKING_REQUEST,
+//   DELETE_BOOKING_SUCCESS,
+//   DELETE_BOOKING_RESET,
+//   DELETE_BOOKING_ERROR,
 
     LIST_AVA_EMP_REQUEST,
     LIST_AVA_EMP_SUCCESS,
     LIST_AVA_EMP_ERROR,
-    LIST_AVA_EMP_RESET,
+//    LIST_AVA_EMP_RESET,
 
 } from '../constants/BookingConstants'
 import { BACKEND_URL } from './UserActions';
@@ -59,7 +59,6 @@ export const createBooking = (fdata) => async (dispatch) => {
 
     }
     catch (error) {
-        console.log('create booking error', error)
         dispatch({
             type: CREATE_BOOKING_ERROR,
             payload: error.response && error.response.data.message
@@ -85,7 +84,6 @@ export const listMyBooking = (fdata) => async (dispatch) => {
                 }
             })
 
-        console.log('data', data)
 
         dispatch({
             type: LIST_MY_BOOKING_SUCCESS,
@@ -99,7 +97,6 @@ export const listMyBooking = (fdata) => async (dispatch) => {
 
     }
     catch (error) {
-        console.log('list my bookings', error)
         dispatch({
             type: LIST_MY_BOOKING_ERROR,
             payload: error.response && error.response.data.message
@@ -127,7 +124,6 @@ export const listPendingBooking = (fdata) => async (dispatch) => {
                 }
             })
 
-        console.log('data', data)
 
         dispatch({
             type: LIST_PENDING_BOOKING_SUCCESS,
@@ -141,7 +137,6 @@ export const listPendingBooking = (fdata) => async (dispatch) => {
 
     }
     catch (error) {
-        console.log('list my bookings', error)
         dispatch({
             type: LIST_PENDING_BOOKING_ERROR,
             payload: error.response && error.response.data.message
@@ -181,7 +176,6 @@ export const getAvalableEmployes = () => async (dispatch) => {
 
     }
     catch (error) {
-        console.log('list emplyess', error)
         dispatch({
             type: LIST_AVA_EMP_ERROR,
             payload: error.response && error.response.data.message

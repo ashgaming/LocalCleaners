@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
+//const mongoose = require('mongoose');
 const morgan = require('morgan')
 const cors = require('cors');
 const app = express();
@@ -15,6 +15,7 @@ const subscriptionRoutes = require('./routes/subscription.routes')
 const feedbackRoutes = require('./routes/feedback.routes')
 const plansRoutes = require('./routes/plans.routes')
 const adminRoutes = require('./routes/admin.routes')
+const paymentRoutes = require('./routes/payment.routes')
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
@@ -22,6 +23,8 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API,
     api_secret: process.env.CLOUDINARY_SECREATE
 });
+
+
 
 
 connectToDB();
@@ -49,6 +52,7 @@ app.use('/subscriptions', subscriptionRoutes);
 app.use('/feedbacks', feedbackRoutes);
 app.use('/plans', plansRoutes);
 app.use('/admin', adminRoutes);
+app.use('/payment', paymentRoutes);
 
 
 module.exports = app;

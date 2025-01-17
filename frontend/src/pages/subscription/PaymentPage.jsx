@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CreditCard } from 'lucide-react';
 import { createSubscription, setMonths } from '../../redux/actions/SubscriptionActions';
 import { CREATE_SUBSCRIPTION_RESET } from '../../redux/constants/SubscriptionConstants';
@@ -12,7 +12,7 @@ const PaymentPage = () => {
   const { selectedPlan, months } = useSelector((state) => state.subscriptionInfo);
  
   if (!selectedPlan || selectedPlan === null) {
-    navigate('/pricing');
+    navigate('/services');
     return null;
   }
 
@@ -32,7 +32,7 @@ const PaymentPage = () => {
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-lg mx-auto">
         <div className="mb-6">
-          <BackButton to="/pricing" />
+          <BackButton to="/services" />
         </div>
         
         <div className="bg-white rounded-lg shadow-lg p-8">
@@ -75,6 +75,9 @@ const PaymentPage = () => {
               <span>${(selectedPlan.price * months).toFixed(2)}</span>
             </div>
           </div>
+
+
+      
 
           <button
             className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition-colors"

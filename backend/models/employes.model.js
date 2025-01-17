@@ -77,8 +77,12 @@ const employesSchema = new mongoose.Schema({
         type:String,
         enum:['manager','owner','employee','helper','admin'],
         required:true,
+    },
+    paymentReceiveCode : {
+        type:String,
+        default:'ABCDEF'
     }
-
+ 
 
 })
 

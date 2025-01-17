@@ -61,7 +61,6 @@ export default function AssignEmployeeForm({ requestId, onSuccess, onError }) {
 
       onSuccess();
     } catch (error) {
-      console.log(error)
       onError();
     } finally {
       setIsLoading(false);

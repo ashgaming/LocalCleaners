@@ -1,13 +1,13 @@
 const http = require('http');
 const app = require('./app');
-//const { initializeSocket } = require('./socket');
+const { initializeSocket } = require('./socket');
 const port = process.env.PORT || 4000;
 const cluster = require('cluster');
 const os = require('os');
 
 
 
-//initializeSocket(server);
+initializeSocket(server);
 
 // Check if the current process is the master
 if (cluster.isMaster) {

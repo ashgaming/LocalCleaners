@@ -5,11 +5,25 @@ import {thunk} from 'redux-thunk';
 
 
 const initialState = {
-  userData:{
+  userData: {
     user: localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : [],
-        loading: false,
-        error: null,
-        success: false,
+    loading: false,
+    error: null,
+    success: false,
+  },
+
+  subscriptionInfo: {
+    firstname: subscriptionInfoData?.firstname || '',
+    email: subscriptionInfoData?.email || '',
+    lastname: subscriptionInfoData?.lastname || '',
+    countryCode: subscriptionInfoData?.countryCode || '',
+    phoneNumber: subscriptionInfoData?.phoneNumber || '',
+    street: subscriptionInfoData?.street || '',
+    house: subscriptionInfoData?.house ||'',
+    city: subscriptionInfoData?.city || '',
+    state: subscriptionInfoData?.state || '',
+    pincode: subscriptionInfoData?.pincode || '',
+    months: 1,
   }
 }
 

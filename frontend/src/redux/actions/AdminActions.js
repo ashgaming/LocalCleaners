@@ -197,7 +197,6 @@ export const getSubscriptionPlan = () => async (dispatch) => {
 
     }
     catch (error) {
-        console.log('list SUBSCRIPTION', error)
         dispatch({
             type: GET_SUBSCRIPTION_PLAN_ERROR,
             payload: error.response && error.response.data.message
@@ -230,7 +229,6 @@ export const createSubscriptionPlans = (fdata) => async (dispatch,navigate) => {
         })
 
         const oldData = JSON.parse(localStorage.getItem('SUBSCRIPTION_PLAN_LIST')) || []
-        console.log(oldData)
         const addedData = [
             ...oldData.plans,
             data.plans
@@ -243,7 +241,6 @@ export const createSubscriptionPlans = (fdata) => async (dispatch,navigate) => {
 
     }
     catch (error) {
-        console.log('create SUBSCRIPTION plans error', error)
         dispatch({
             type: CREATE_SUBSCRIPTION_PLANS_ERROR,
             payload: error.response && error.response.data.message

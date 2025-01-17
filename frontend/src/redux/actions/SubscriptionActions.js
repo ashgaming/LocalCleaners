@@ -6,7 +6,6 @@ import {
     CREATE_SUBSCRIPTION_REQUEST,
     CREATE_SUBSCRIPTION_SUCCESS,
 
-    GET_SUBSCRIPTION_RESET,
     GET_SUBSCRIPTION_ERROR,
     GET_SUBSCRIPTION_REQUEST,
     GET_SUBSCRIPTION_SUCCESS,
@@ -24,7 +23,6 @@ import {
 } from "../constants/SubscriptionConstants";
 import { BACKEND_URL } from "./UserActions";
 import { token } from "../constants/RequiedConstant";
-import { useNavigate } from "react-router-dom";
 
 export const setSelectedPlan = (plan) => ({
     type: SET_SELECTED_PLAN,
@@ -100,10 +98,15 @@ export const setError = (error) => ({
 export const createSubscription = (fdata) => async (dispatch,navigate) => {
 
     try {
+
+        dispatch({
+            type: CREATE_SUBSCRIPTION_RESET
+        })
+
         dispatch({
             type: CREATE_SUBSCRIPTION_REQUEST
         })
-
+        
 
         const { data } = await axios.post(`${BACKEND_URL}/subscriptions/create`,
             fdata,
@@ -116,13 +119,13 @@ export const createSubscription = (fdata) => async (dispatch,navigate) => {
 
         dispatch({
             type: CREATE_SUBSCRIPTION_SUCCESS,
-            payload: data
+            payload: data.subscription
         })
+
 
         navigate('/checkout');
     }
     catch (error) {
-        console.log('create SUBSCRIPTION error', error)
         dispatch({
             type: CREATE_SUBSCRIPTION_ERROR,
             payload: error.response && error.response.data.message
@@ -161,7 +164,6 @@ export const getSubscription = () => async (dispatch) => {
 
     }
     catch (error) {
-        console.log('list SUBSCRIPTION', error)
         dispatch({
             type: GET_SUBSCRIPTION_ERROR,
             payload: error.response && error.response.data.message
