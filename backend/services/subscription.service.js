@@ -1,74 +1,135 @@
 const subscriptionModel = require('../models/subscription.model')
-const plansModel = require('../models/plans.model')
+const plansModel = require('../models/plans.model');
+const { pushEmailToAdmin } = require('./email.service');
 
-async function getSubscriptionAmount(service,duration) {
-    try{
+async function getSubscriptionAmount(service, duration) {
+    try {
         const plan = await plansModel.findById(service).exec()
-        
-        return plan?.price * duration + ( 18 % plan?.price * duration);
-    }catch(err){
+
+        return plan?.price * duration + (18 % plan?.price * duration);
+    } catch (err) {
+        return 0
+    }
+}
+
+async function sendNewSubscriberNotification() {
+    try {
+
+
+        const { email, phone, message } = req.body;
+
+        // Send email
+        const mailOptions = {
+            from: 'your_email@gmail.com',
+            to: email,
+            subject: 'Notification',
+            text: message,
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        // Send SMS
+        await client.messages.create({
+            body: message,
+            to: phone,
+            from: 'your_twilio_phone_number',
+        });
+
+    } catch (err) {
         return 0
     }
 }
 
 module.exports.createSubscriptions = async ({
-    user, address, service, start_date , end_date,countryCode , phoneNumber,id  , lng, ltd , email , duration 
+    user, address, service, start_date, end_date, countryCode, phoneNumber, id, lng, ltd, email, duration
 }) => {
 
-    if (!user || !address  || !service || !phoneNumber) {
+    if (!user || !address || !service || !phoneNumber) {
+        console.log(user, address, service, start_date, end_date, countryCode, phoneNumber, id, lng, ltd, email, duration)
         throw new Error('All fiels are required');
     }
 
-    const subscription =await subscriptionModel.create({
+    const plan =  {
+        service: id,
+        start_date,
+        end_date,
+        address,
+        duration,
+        ltd: ltd || null,
+        lng: lng || null,
+    }
+
+    const subscription = await subscriptionModel.create({
         user: user,
-        contactInfo:{
-            email,
+        contactInfo: {
+            email: email || user?.email,
             phoneNumber,
             countryCode
         },
-        plan:{
-            service:id,
-            start_date,
-            end_date,
-            duration,
-            address,
-            ltd: ltd || null,
-            lng: lng || null,
-        },
+        plan,
         payment: {
-            amount: await getSubscriptionAmount(id,duration)
+            amount: await getSubscriptionAmount(id, duration)
         }
     })
 
     return subscription;
+
+    const date = new Date()
+    const today = date.now()
+    const message = `
+    Dear Admin,
+
+    This email is to inform you of a new subscriber to https://localcleaner.onrender.com.
+
+    Subscriber Information:
+
+    Name: ${user?.fullname?.firstname} ${user?.fullname?.lastname}
+    Email Address: ${email}
+    Subscription Date: ${today}
+    Subscription Type: ${plan}
+    You can view the subscriber's details and manage their subscription within the  https://localcleaner.onrender.com admin panel.
+
+    Thank you,
+
+    Admin
+    `
+    const reciver = email;
+    const subject = 'New Subscriber on Local Cleaner'
+
+    pushEmailToAdmin(
+        '',
+        email,
+        subject,
+        message
+    )
 }
 
-module.exports.getSubscriptions = async ({user}) => {
+module.exports.getSubscriptions = async ({ user }) => {
 
-    if (!user ) {
+    if (!user) {
         throw new Error('user not found');
     }
 
-    const subscription =await subscriptionModel.find({
+    const subscription = await subscriptionModel.find({
         user
     }).populate('plan.service').exec()
-    
+
 
     return subscription;
 }
 
 
-module.exports.GetSubscriptionDetails = async ({user,id}) => {
+module.exports.GetSubscriptionDetails = async ({ user, id }) => {
 
-    if (!user || !id ) {
+    if (!user || !id) {
         throw new Error('user not found');
     }
 
-    const subscription =await subscriptionModel.findOne({
-        _id:id,
+    const subscription = await subscriptionModel.findOne({
+        _id: id,
         user,
     }).populate('plan.service').exec()
-    
+
 
     return subscription;
 }

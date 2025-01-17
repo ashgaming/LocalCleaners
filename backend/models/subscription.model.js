@@ -46,7 +46,7 @@ const SubscriptionSchema = new moongose.Schema({
 
         duration: {
             type: String,
-            required: true,
+          //  required: true,
         },
 
         address: {

@@ -38,4 +38,7 @@ router.get('/user',
     query('_id').isMongoId().withMessage('Invalid ID'),
 ], adminController.usersDetails)
 
+router.get('/send-notification'
+, adminController.pushEmailToAdmin)
+
 module.exports = router;

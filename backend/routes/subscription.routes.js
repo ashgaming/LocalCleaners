@@ -11,7 +11,7 @@ router.post('/create', authMiddleware.authUser, [
   body('email').isString().withMessage('Service must be a string'), // Validate type
   body('start_date').isString().withMessage('Service must be a string'), // Validate type
   body('end_date').isString().withMessage('Service must be a string'), // Validate type
-  body('duration').isString().withMessage('Service must be a string'), // Validate type
+  body('duration').optional().isNumeric().withMessage('Duration must be a string'), // Validate duration
   body('address').isString().withMessage('Place must be a string'), // Validate type
   body('address').isLength({ min: 3 }).withMessage('Place must be at least 3 characters long'),
   body('countryCode').isString().isLength({ min: 2, max: 2 }).withMessage('countryCode requires'),
