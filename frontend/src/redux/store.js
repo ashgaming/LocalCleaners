@@ -7,7 +7,6 @@ import { thunk } from 'redux-thunk';
 const subscriptionInfoData = localStorage.getItem('subscriberInfo') ? JSON.parse(localStorage.getItem('subscriberInfo')) : []
 
 
-console.log(subscriptionInfoData)
 const initialState = {
   userData: {
     user: localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : [],

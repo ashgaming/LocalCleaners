@@ -48,7 +48,6 @@ const EmployeeProfileForm = () => {
     e.preventDefault();
 
     dispatch(createEmployee(profile))
-    console.log('Profile submitted:', profile);
   };
 
   const handleSkillsChange = (e) => {
@@ -91,7 +90,6 @@ const EmployeeProfileForm = () => {
       setLoadingUpload(false)
     } catch (error) {
       setUploadError(error.message, 'An error occurred while uploading the image.');
-      console.log(error);
       setLoadingUpload(false)
     }
   };
