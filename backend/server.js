@@ -8,7 +8,7 @@ const os = require('os');
 // Check if the current process is the master
 if (cluster.isMaster) {
     const numCPUs = os.cpus().length;
-    console.log(`Master process is running. Forking for ${numCPUs} CPUs...`);
+   // console.log(`Master process is running. Forking for ${numCPUs} CPUs...`);
 
     // Fork a worker process for each CPU
     for (let i = 0; i < numCPUs; i++) {
@@ -23,6 +23,19 @@ if (cluster.isMaster) {
 } else {
 
     const server = http.createServer(app);
+
+    // Error handling for the server
+    server.on('error', (err) => {
+        console.error('Server error:', err);
+        if (err.code === 'EADDRINUSE') {
+            console.error(`Port ${port} is already in use`);
+        } else if (err.code === 'EPIPE') {
+            console.error('Broken pipe error. Possible client disconnection.');
+        } else {
+            console.error('Unexpected server error:', err);
+        }
+        process.exit(1); // Exit if the server encounters an error
+    });
 
     //  initializeSocket(server);
     // Start the server
