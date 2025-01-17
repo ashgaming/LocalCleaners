@@ -100,10 +100,15 @@ export const setError = (error) => ({
 export const createSubscription = (fdata) => async (dispatch,navigate) => {
 
     try {
+
+        dispatch({
+            type: CREATE_SUBSCRIPTION_RESET
+        })
+
         dispatch({
             type: CREATE_SUBSCRIPTION_REQUEST
         })
-
+        
 
         const { data } = await axios.post(`${BACKEND_URL}/subscriptions/create`,
             fdata,
@@ -116,8 +121,9 @@ export const createSubscription = (fdata) => async (dispatch,navigate) => {
 
         dispatch({
             type: CREATE_SUBSCRIPTION_SUCCESS,
-            payload: data
+            payload: data.subscription
         })
+
 
         navigate('/checkout');
     }

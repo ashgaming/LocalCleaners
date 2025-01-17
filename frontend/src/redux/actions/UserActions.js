@@ -180,6 +180,12 @@ export const logoutUser = () => async (dispatch) => {
     dispatch({ type: USER_LOGIN_RESET })
     dispatch({type: LIST_MY_BOOKING_RESET})
     localStorage.removeItem('token')
+    localStorage.removeItem('MY_SUBSCRIPTION_LIST')
+    localStorage.removeItem('SUBSCRIPTION_PLAN_LIST')
+    localStorage.removeItem('activeWork')
+    localStorage.removeItem('mybooking')
+    localStorage.removeItem('subscriberInfo')
+    localStorage.removeItem('userAddress')
 
     return true;
 }

@@ -4,8 +4,7 @@ import Wrapper from './components/ui/Wrapper';
 import AdminDashboard from './pages/admin/Dashboard';
 const Landing = React.lazy(()=>import( './pages/Landing'));
 const Dashboard = React.lazy(()=>import( './pages/Dashboard'));
-//const Services = React.lazy(()=>import( './pages/Services'));
-const Pricing = React.lazy(()=>import( './pages/Pricing'));
+const ServicesPage = React.lazy(()=>import( './pages/ServicesPage'));
 const Contact = React.lazy(()=>import( './pages/Contact'));
 const Booking = React.lazy(()=>import( './pages/Booking'));
 const AuthForm = React.lazy(()=>import( './pages/AuthForm'));
@@ -21,8 +20,7 @@ const EmployeeProfileForm  = React.lazy(()=> import( './components/Auth/employee
 const routes = [
   { link: '/', element: <Landing /> },
   { link: '/dashboard', element: <Dashboard /> },
- // { link: '/services', element: <Services /> },
-  { link: '/pricing', element: <Pricing /> },
+  { link: '/services', element: <ServicesPage /> },
   { link: '/contact', element: <Contact /> },
   { link: '/booking', element: <Booking /> },
   { link: '/login', element: <AuthForm /> },
@@ -31,12 +29,12 @@ const routes = [
   { link: '/active-work', element: <WorkingPage /> },
   { link: '/todays-works', element: <TodaysBookingsList /> },
   { link: '/payment', element: <PaymentPage /> },
-  { link: '/checkout', element: <CheckoutPage /> },
+  { link: '/checkout/:id?', element: <CheckoutPage /> },
   { link: '/userDataInfo', element: <UserDataInfo /> },
   { link: '/admin', element: <AdminDashboard /> },
 ];
 
-function App() {
+const  App = () => {
   return (
     <Router>
       <Routes>

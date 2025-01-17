@@ -2,13 +2,15 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { calculateTax } from '../../helper/subscriptionHelper';
 
-export const PaymentSummary = () => {
+export const PaymentSummary = ({setAmount}) => {
   const { selectedPlan, months } = useSelector((state) => state.subscriptionInfo);
   
   if (!selectedPlan) return null;
   
   const subtotal = selectedPlan.price * months;
   const { taxAmount, total } = calculateTax(subtotal);
+
+  setAmount(total.toFixed(2))
 
   return (
     <div className="bg-gray-50 p-6 rounded-lg">

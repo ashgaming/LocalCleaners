@@ -35,17 +35,6 @@ import {
 
 export const subscriptionReducer = (state = {
   selectedPlan: null,
-  firstname: '',
-  email: '',
-  lastname: '',
-  countryCode: '',
-  phoneNumber: '',
-  street: '',
-  house: '',
-  city: '',
-  state: '',
-  pincode: '',
-  months: 1,
   loading: false,
   error: null,
 }, action) => {
@@ -106,6 +95,7 @@ export const createSubscriptionReducer = (state =
         loading: false,
         subscription: action.payload,
         success: true,
+        error: null,
       };
     case CREATE_SUBSCRIPTION_ERROR:
       return {
@@ -150,6 +140,7 @@ export const getSubscriptionReducer = (state =
         loading: false,
         subscription: action.payload,
         success: true,
+        error: null,
       };
     case GET_SUBSCRIPTION_ERROR:
       return {
@@ -193,6 +184,7 @@ export const getSubscriptionPlanReducer = (state =
         loading: false,
         subscription: action.payload,
         success: true,
+        error: null,
       };
     case GET_SUBSCRIPTION_PLAN_ERROR:
       return {
