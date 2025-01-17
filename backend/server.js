@@ -7,7 +7,7 @@ const os = require('os');
 
 
 
-initializeSocket(server);
+
 
 // Check if the current process is the master
 if (cluster.isMaster) {
@@ -28,6 +28,7 @@ if (cluster.isMaster) {
 
     const server = http.createServer(app);
 
+    initializeSocket(server);
     // Start the server
     server.listen(port, () => {
         console.log(`Worker ${process.pid} is listening on port ${port}`);
