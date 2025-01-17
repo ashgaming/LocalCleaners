@@ -3,6 +3,8 @@ import CombineReducers from './combineReducer';
 //import { composeWithDevTools } from 'redux-devtools-extension'
 import {thunk} from 'redux-thunk';
 
+const subscriptionInfoData = localStorage.getItem('subscriberInfo') ? JSON.parse(localStorage.getItem('subscriberInfo')) : []
+
 
 const initialState = {
   userData: {
