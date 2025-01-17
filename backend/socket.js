@@ -9,7 +9,7 @@ function initializeSocket(server) {
     // Attach socket.io to the server
     io = socketIo(server, {
         cors: {
-            origin: 'http://localhost:3000', // Replace with your frontend URL
+            origin: 'https://localcleaner.onrender.com', // Replace with your frontend URL
             methods: ['GET', 'POST'],
         },
     });

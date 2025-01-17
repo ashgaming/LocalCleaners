@@ -5,10 +5,6 @@ const port = process.env.PORT || 4000;
 const cluster = require('cluster');
 const os = require('os');
 
-
-
-
-
 // Check if the current process is the master
 if (cluster.isMaster) {
     const numCPUs = os.cpus().length;
@@ -28,7 +24,7 @@ if (cluster.isMaster) {
 
     const server = http.createServer(app);
 
-    initializeSocket(server);
+  //  initializeSocket(server);
     // Start the server
     server.listen(port, () => {
         console.log(`Worker ${process.pid} is listening on port ${port}`);
