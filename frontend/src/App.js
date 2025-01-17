@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Wrapper from './components/ui/Wrapper';
-import AdminDashboard from './pages/admin/Dashboard';
+const  AdminDashboard = React.lazy(()=>import( './pages/admin/Dashboard'));
 const Landing = React.lazy(()=>import( './pages/Landing'));
 const Dashboard = React.lazy(()=>import( './pages/Dashboard'));
 const ServicesPage = React.lazy(()=>import( './pages/ServicesPage'));
