@@ -1,4 +1,4 @@
-import { USER_DATA_ERROR, USER_DATA_REQUEST, USER_DATA_RESET, USER_DATA_SUCCESS, USER_LOGIN_ERROR, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_RESET, USER_REGISTER_ERROR, USER_REGISTER_REQUEST, USER_REGISTER_RESET, USER_REGISTER_SUCCESS, CREATE_EMPLOYEE_REQUEST, CREATE_EMPLOYEE_SUCCESS, CREATE_EMPLOYEE_ERROR, CREATE_EMPLOYEE_RESET } from '../constants/UserConstants';
+import { USER_DATA_ERROR, USER_DATA_REQUEST, USER_DATA_RESET, USER_DATA_SUCCESS, USER_LOGIN_ERROR, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_RESET, USER_REGISTER_ERROR, USER_REGISTER_REQUEST, USER_REGISTER_RESET, USER_REGISTER_SUCCESS, CREATE_EMPLOYEE_REQUEST, CREATE_EMPLOYEE_SUCCESS, CREATE_EMPLOYEE_ERROR, CREATE_EMPLOYEE_RESET , GET_SERVICE_AVALABLE_REQUEST , GET_SERVICE_AVALABLE_SUCCESS , GET_SERVICE_AVALABLE_ERROR , GET_SERVICE_AVALABLE_RESET } from '../constants/UserConstants';
 
 export const userLoginReducer = (state =
     {
@@ -60,26 +60,26 @@ export const userRegisterReducer = (state =
                 error: null,
                 success: null,
             };
-            case USER_REGISTER_SUCCESS:
-                return {
-                    ...state,
-                    loading: false,
-                    user: action.payload,
-                    success: true,
-                };
-                case USER_REGISTER_ERROR:
-                    return {
-                        ...state,
-                        loading: false,
-                        error: action.payload,
-                        success: false,
-                    };
-                    case USER_REGISTER_RESET:
-                        return {
-                            ...state,
-                            user: [],
-                            loading: false,
-                            success: false,
+        case USER_REGISTER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                user: action.payload,
+                success: true,
+            };
+        case USER_REGISTER_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+                success: false,
+            };
+        case USER_REGISTER_RESET:
+            return {
+                ...state,
+                user: [],
+                loading: false,
+                success: false,
                 error: null,
             };
         default:
@@ -166,6 +166,50 @@ export const createEmployeeReducer = (state =
                 loading: false,
                 error: null,
                 success: false
+            };
+        default:
+            return state;
+    }
+};
+
+export const avalabityCheckReducer = (state =
+    {
+        result: [],
+        loading: false,
+        error: null,
+        success: false,
+    }
+    , action) => {
+    switch (action.type) {
+        case GET_SERVICE_AVALABLE_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: null,
+                success: false,
+                result: [],
+            };
+        case GET_SERVICE_AVALABLE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                result: action.payload,
+                success: true,
+            };
+        case GET_SERVICE_AVALABLE_ERROR:
+            return {
+                ...state,
+                loading: false,
+                success: false,
+                result: [],
+                error: action.payload,
+            };
+        case GET_SERVICE_AVALABLE_RESET:
+            return {
+                result: [],
+                loading: false,
+                error: null,
+                success: false,
             };
         default:
             return state;

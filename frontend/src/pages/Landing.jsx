@@ -6,6 +6,7 @@ import FeaturesSkeleton from '../skeletons/FeaturesSkeleton';
 import ServicesSkeleton from '../skeletons/ServicesSkeleton';
 import CompanyDetailsSkeleton from '../skeletons/CompanyDetailsSkeleton';
 import FooterSkeleton from '../skeletons/FooterSkeleton';
+const AvalabityCheck = React.lazy(() => import('../components/layout/AvalabityCheck'));
 const Services = React.lazy(() => import('../components/Landing/Services'));
 const GallaryImages = React.lazy(() => import('../components/Landing/GallaryImages'));
 const Navbar = React.lazy(() => import('../components/layout/Navbar'));
@@ -31,6 +32,10 @@ const Landing = () => {
 
       <Suspense fallback={<ServicesSkeleton />}>
         <Services />
+      </Suspense>
+
+      <Suspense fallback={<ServicesSkeleton />}>
+        <AvalabityCheck />
       </Suspense>
 
       <Suspense fallback={<ServicesSkeleton />}>

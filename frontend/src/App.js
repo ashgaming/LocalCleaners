@@ -1,6 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Wrapper from './components/ui/Wrapper';
+import TermsAndConditions from './pages/TermsAndConditions';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import Navbar from './components/layout/Navbar';
+const ComplainForm = React.lazy(()=>import('./pages/ComplainForm'));
 const  AdminDashboard = React.lazy(()=>import( './pages/admin/Dashboard'));
 const Landing = React.lazy(()=>import( './pages/Landing'));
 const Dashboard = React.lazy(()=>import( './pages/Dashboard'));
@@ -19,7 +23,7 @@ const EmployeeProfileForm  = React.lazy(()=> import( './components/Auth/employee
 
 const routes = [
   { link: '/', element: <Landing /> },
-  { link: '/dashboard', element: <Dashboard /> },
+  { link: '/dashboard',name:'dashboard', element: <Dashboard /> },
   { link: '/services', element: <ServicesPage /> },
   { link: '/contact', element: <Contact /> },
   { link: '/booking', element: <Booking /> },
@@ -31,11 +35,16 @@ const routes = [
   { link: '/payment', element: <PaymentPage /> },
   { link: '/checkout/:id?', element: <CheckoutPage /> },
   { link: '/userDataInfo', element: <UserDataInfo /> },
-  { link: '/admin', element: <AdminDashboard /> },
+  { link: '/admin',name:'admin', element: <AdminDashboard /> },
+  { link: '/report-complain', element: <ComplainForm /> },
+  { link: '/terms-and-conditions', element: <TermsAndConditions /> },
+  { link: '/privacy-policy', element: <PrivacyPolicy /> },
 ];
 
 const  App = () => {
+
   return (
+    <>
     <Router>
       <Routes>
         {routes.map((route, index) => (
@@ -47,6 +56,7 @@ const  App = () => {
         ))}
       </Routes>
     </Router>
+    </>
   );
 }
 

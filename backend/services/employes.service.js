@@ -1,5 +1,6 @@
 const employesModel = require('../models/employes.model');
 const bookingsModel = require('../models/booking.model');
+const redisClient = require('../redisClient');
 
 module.exports.createEmployes = async ({
     firstname, lastname, email, password
@@ -23,7 +24,7 @@ module.exports.createEmployes = async ({
 
 
 module.exports.createEmployesProfile = async ({
-    email, address, profileImage, experience,phoneNumber,
+    email, address, profileImage, experience, phoneNumber,
 }) => {
 
     try {
@@ -97,7 +98,7 @@ module.exports.VerifyBooking = async ({ employee, otp, _id }) => {
         throw new Error(`Error fetching bookings: ${error.message}`);
 
     }
-}  
+}
 
 module.exports.completeWork = async ({ employee, otp, _id }) => {
     try {
@@ -135,9 +136,9 @@ module.exports.completePayment = async ({ employee, otp, _id }) => {
         const booking = await bookingsModel.findOneAndUpdate({
             _id,
             employee,
-        },{
-            payment:{
-                status:'completed'
+        }, {
+            payment: {
+                status: 'completed'
             }
         }).exec();
 
@@ -149,4 +150,42 @@ module.exports.completePayment = async ({ employee, otp, _id }) => {
     } catch (error) {
         throw new Error(`Error completing work: ${error.message}`);
     }
-}  
+}
+
+
+module.exports.getIsServiceAvailable = async ({ pincode }) => {
+    try {
+
+        const cacheKey = `serviceAvailability:${pincode}`;
+
+        //Check Redis cache for the result
+          const cachedResult = await redisClient.get(cacheKey);
+
+
+          if (cachedResult) {
+            // Return cached data
+            return JSON.parse(cachedResult);
+          }
+
+        // If not in cache, fetch from database
+        const employees = await employesModel
+        .find({ address: { $regex: `${pincode}$` } }) // Regex for pincode at the end of address
+        .select('address email')
+        .exec();
+
+        console.log('hit ')
+
+        const result = {
+            status: employees.length !== 0 ? 'Available' : 'Unavailable',
+            count: employees.length,
+           // employees,
+        };
+
+        // Cache the result in Redis with an expiration time (e.g., 1 hour)
+          await redisClient.set(cacheKey, JSON.stringify(result), 'EX', 25);
+
+        return result;
+    } catch (error) {
+        throw new Error(`Error fetching service availability: ${error.message}`);
+    }
+};

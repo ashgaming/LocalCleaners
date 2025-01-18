@@ -2,12 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import HeroSkeleton from '../../skeletons/HeroSkeleton';
+import TypeWriter from '../../helper/Animation';
 
 export default function Hero() {
-  const { user , loading } = useSelector(state => state.userData)
+  const { user, loading } = useSelector(state => state.userData)
 
-  if(loading){
-    return <HeroSkeleton/>
+  if (loading) {
+    return <HeroSkeleton />
   }
 
 
@@ -20,8 +21,21 @@ export default function Hero() {
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
                 <div className="text-center">
                   <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6">
-                    Professional Home Cleaning Services
+                    Professional Cleaning Services
                   </h1>
+                  <p className="text-lg md:text-xl text-blue-100 mb-6 md:mb-8">
+                    <TypeWriter
+                      texts={[
+                        "Experience the difference of a truly clean home",
+                        "खऱ्या स्वच्छतेचा अनुभव घ्या",
+                        "एक सचमुच साफ घर का अंतर महसूस करें ",
+                        "वास्तविकं शुचिगृहस्य भेदं अनुभवन्तु"
+                      ]}
+                      typingSpeed={100}
+                      deletingSpeed={50}
+                      pauseTime={3000}
+                    />
+                  </p>
                   <p className="text-lg md:text-xl text-blue-100 mb-6 md:mb-8">
                     Manage your Cleaning requests
                   </p>
@@ -41,10 +55,20 @@ export default function Hero() {
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
                 <div className="text-center">
                   <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6">
-                    Professional Home Cleaning Services
+                    Professional Cleaning Services
                   </h1>
                   <p className="text-lg md:text-xl text-blue-100 mb-6 md:mb-8">
-                    Experience the difference of a truly clean home
+                    <TypeWriter
+                      texts={[
+                        "Experience the difference of a truly clean home",
+                        "खऱ्या स्वच्छतेचा अनुभव घ्या",
+                        "एक सचमुच साफ घर का अंतर महसूस करें ",
+                        "वास्तविकं शुचिगृहस्य भेदं अनुभवन्तु"
+                      ]}
+                      typingSpeed={100}
+                      deletingSpeed={50}
+                      pauseTime={3000}
+                    />
                   </p>
                   <Link
                     to="/booking"

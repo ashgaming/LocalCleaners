@@ -51,12 +51,12 @@ export const Footer = () => {
                                     to="/"
                                     className="text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
                                 >
-                                    about us
+                                    About us
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    to="/"
+                                    to="/terms-and-conditions"
                                     className="text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
                                 >
                                     Terms & conditions 
@@ -64,7 +64,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    to="/"
+                                    to="/privacy-policy"
                                     className="text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
                                 >
                                     Privacy policy 
@@ -127,6 +127,14 @@ export const Footer = () => {
                                 </Link>
                             </li>
                             
+                            <li>
+                                <Link
+                                    to="/report-complain"
+                                    className="text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
+                                >
+                                    Report
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                     <div>
