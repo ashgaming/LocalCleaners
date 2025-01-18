@@ -24,17 +24,22 @@ const EmployeeProfileForm = () => {
   const { loading, error, profile: emp } = useSelector(state => state.createEmployee)
   const { user , success } = useSelector(state=>state.userData)
 
-
+  const [pincode,setPincode] = useState('')
   const [profile, setProfile] = useState({
     address: '',
     profileImage: '',
     experience: '',
-    phoneNumber:''
+    phoneNumber:'',
     //  skills: [],
     //  bio: ''
   });
 
   useEffect(() => {
+
+    if(!user.employee){
+      alert('Please login as Employee first')
+    }
+
     if (success) {
       if ( user.employee?.status === 'unregistered' ) {
         alert('Please create yoir profile')
@@ -46,8 +51,15 @@ const EmployeeProfileForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    dispatch(createEmployee(profile))
+  
+    let profileData = {
+      ...profile, // Spread the existing profile data
+    };
+  
+    // Assuming `profile.address` exists and you want to append `pincode` to it
+    profileData.address = profileData.address ? `${profileData.address}${pincode}` : pincode;
+  
+    dispatch(createEmployee(profileData));
   };
 
   const handleSkillsChange = (e) => {

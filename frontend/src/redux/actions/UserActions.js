@@ -1,12 +1,13 @@
+import { clearUserSession, getUserSession, setUserSession } from '../../helper/HandleData';
 import { LIST_MY_BOOKING_RESET } from '../constants/BookingConstants';
-import { CREATE_EMPLOYEE_ERROR, CREATE_EMPLOYEE_REQUEST, CREATE_EMPLOYEE_SUCCESS, USER_DATA_ERROR, USER_DATA_REQUEST, USER_DATA_RESET, USER_DATA_SUCCESS, USER_LOGIN_ERROR, USER_LOGIN_REQUEST, USER_LOGIN_RESET, USER_LOGIN_SUCCESS, USER_REGISTER_ERROR, USER_REGISTER_REQUEST, USER_REGISTER_RESET, USER_REGISTER_SUCCESS } from '../constants/UserConstants';
+import { CREATE_EMPLOYEE_ERROR, CREATE_EMPLOYEE_REQUEST, CREATE_EMPLOYEE_SUCCESS, GET_SERVICE_AVALABLE_ERROR, GET_SERVICE_AVALABLE_REQUEST, GET_SERVICE_AVALABLE_SUCCESS, USER_DATA_ERROR, USER_DATA_REQUEST, USER_DATA_RESET, USER_DATA_SUCCESS, USER_LOGIN_ERROR, USER_LOGIN_REQUEST, USER_LOGIN_RESET, USER_LOGIN_SUCCESS, USER_REGISTER_ERROR, USER_REGISTER_REQUEST, USER_REGISTER_RESET, USER_REGISTER_SUCCESS } from '../constants/UserConstants';
 import axios from 'axios'
 
 export const BACKEND_URL = process.env.BACKEND_URL ? process.env.BACKEND_URL : 'https://localcleaners-backend.onrender.com'
 
 export const getUserData = (type) => async (dispatch, navigate) => {
 
-    const token = localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token'))?.token : null;
+    const token = localStorage.getItem('token') ? getUserSession().token : null;
     const endpoints = {
         user: `${BACKEND_URL}/users/profile`,
         employee: `${BACKEND_URL}/employes/profile`,
@@ -78,7 +79,7 @@ export const userLogin = (type, fdata) => async (dispatch) => {
             payload: data
         })
 
-        localStorage.setItem('token', JSON.stringify(data))
+        setUserSession(data)
 
         dispatch(getUserData(type))
     }
@@ -179,7 +180,7 @@ export const logoutUser = () => async (dispatch) => {
     dispatch({ type: USER_REGISTER_RESET })
     dispatch({ type: USER_LOGIN_RESET })
     dispatch({type: LIST_MY_BOOKING_RESET})
-    localStorage.removeItem('token')
+    clearUserSession();
     localStorage.removeItem('MY_SUBSCRIPTION_LIST')
     localStorage.removeItem('SUBSCRIPTION_PLAN_LIST')
     localStorage.removeItem('activeWork')
@@ -188,4 +189,44 @@ export const logoutUser = () => async (dispatch) => {
     localStorage.removeItem('userAddress')
 
     return true;
+}
+
+
+
+export const searchAvalabityService = (pincode) => async (dispatch, navigate) => {
+
+  //  const token = localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token'))?.token : null;
+   
+    try {
+
+        dispatch({
+            type: GET_SERVICE_AVALABLE_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+            },
+            params:{
+                pincode
+            }
+        }
+
+        const { data } = await axios.get(`${BACKEND_URL}/employes/service/availability`,
+            config)
+
+        dispatch({
+            type: GET_SERVICE_AVALABLE_SUCCESS,
+            payload: data.result
+        })
+
+    }
+    catch (error) {
+        dispatch({
+            type: GET_SERVICE_AVALABLE_ERROR,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+        })
+    }
 }

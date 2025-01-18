@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { userDataReducer, userLoginReducer, userRegisterReducer , createEmployeeReducer } from "./reducers/UserReducers";
+import { userDataReducer, userLoginReducer, userRegisterReducer , createEmployeeReducer, avalabityCheckReducer } from "./reducers/UserReducers";
 import { createBookingReducer, deleteBookingReducer, listAvalableEmployesReducer, listBookingReducer, listMyBookingReducer, listPendingBookingReducer } from "./reducers/BookingReducer";
 import { createSubscriptionPlansReducer, createSubscriptionReducer, getSubscriptionPlanReducer, getSubscriptionReducer, subscriptionReducer } from "./reducers/SubscriptionReducers";
 import { dashboardReducer, getEmployeeAdminReducer, getEmployeesAdminReducer, getFeedBacksAdminReducer, getUsersAdminReducer } from "./reducers/AdminReducer";
@@ -36,8 +36,9 @@ const CombineReducers = combineReducers({
 
     getStaffToPaySubCash:getStaffToPaySubCashReducer,
     completePaySubCash:completePaySubCashReducer,
-    
 
+    avalabityCheck:avalabityCheckReducer,
+    
 });
 
 export default CombineReducers;

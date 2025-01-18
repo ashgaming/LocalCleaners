@@ -8,21 +8,21 @@ const services = [
     name: 'Regular Cleaning',
     description: 'Standard cleaning service for maintained homes',
     duration: '2-3 hours',
-    price: '$99',
+    price: 'Rs 499 (Negotiable)',
   },
   {
     id: 'deep',
     name: 'Deep Cleaning',
     description: 'Thorough cleaning for homes needing extra attention',
     duration: '4-5 hours',
-    price: '$199',
+    price: 'Rs 999 (Negotiable)',
   },
   {
     id: 'move',
     name: 'Move In/Out Cleaning',
     description: 'Detailed cleaning for moving transitions',
     duration: '5-6 hours',
-    price: '$299',
+    price: 'Rs 1999 (Negotiable)',
   },
 ];
 

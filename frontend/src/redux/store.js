@@ -1,14 +1,16 @@
 import { createStore, applyMiddleware } from 'redux';
 import CombineReducers from './combineReducer';
-//import { composeWithDevTools } from 'redux-devtools-extension'
-import {thunk} from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension'
+import { thunk } from 'redux-thunk';
+import { getUserSession } from '../helper/HandleData';
+
 
 const subscriptionInfoData = localStorage.getItem('subscriberInfo') ? JSON.parse(localStorage.getItem('subscriberInfo')) : []
 
 
 const initialState = {
   userData: {
-    user: localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : [],
+    user: localStorage.getItem('token') ? getUserSession() : [],
     loading: false,
     error: null,
     success: false,

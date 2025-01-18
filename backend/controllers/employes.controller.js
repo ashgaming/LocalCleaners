@@ -183,3 +183,28 @@ module.exports.VerifyBooking = async (req, res, next) => {
         return res.status(400).json({ errors : error })
     }
  }
+
+ module.exports.getIsServiceAvalable = async (req, res, next) => {
+
+   try  {
+        const error = validationResult(req)
+    if (!error.isEmpty()) {
+        return res.status(400).json({ errors: error.array() })
+    }
+
+    const { pincode } = req.query
+
+ 
+    if (!pincode) {
+        return res.status(401).json({ message: 'Invalid Pincode' })
+    }
+
+    const result = await employesService.getIsServiceAvailable({pincode})
+
+    res.status(201).json({ result})
+
+}catch(error){
+    return res.status(500).json({ message: 'Internal server error' })
+}
+
+}
