@@ -133,7 +133,7 @@ module.exports.VerifyBooking = async (req, res, next) => {
 
     try{
 
-        const { _id , otp } = req.query
+        const { _id , otp } = req.body
 
         const verifyStatus = await employesService.VerifyBooking({employee:req.employee,_id,otp})
 
@@ -153,11 +153,11 @@ module.exports.VerifyBooking = async (req, res, next) => {
 
     try{
 
-        const { _id , otp } = req.query
+        const { _id , otp } = req.body
 
-        const verifyStatus = await employesService.completePayment({employee:req.employee,_id,otp})
+        const booking = await employesService.completePayment({employee:req.employee,_id,otp})
 
-        return res.status(200).json({ verifyStatus })
+        return res.status(200).json({ booking })
 
     }catch(error){
         return res.status(400).json({ errors : error })
@@ -173,7 +173,7 @@ module.exports.VerifyBooking = async (req, res, next) => {
 
     try{
 
-        const { _id , otp } = req.query
+        const { _id , otp } = req.body
 
         const verifyStatus = await employesService.completeWork({employee:req.employee,_id})
 

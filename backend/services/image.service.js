@@ -16,8 +16,6 @@ module.exports.uploadImage = async ({
             folder: 'EmpProfile'
         });
 
-        console.log('result', result)
-
         return result.secure_url;
     }
 
