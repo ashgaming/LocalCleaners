@@ -2,6 +2,7 @@ const employesModel = require('../models/employes.model');
 const usersModel = require('../models/user.model');
 const bookingsModel = require('../models/booking.model');
 const userModel = require('../models/user.model');
+const redisClient = require('../redisClient');
 
 module.exports.registerAdmin = async ({
     firstname, lastname, email, password
@@ -120,4 +121,14 @@ module.exports.usersDetails = async ({_id}) => {
         
 
     
+}
+
+module.exports.clearRedisData = async () => {
+    try {
+        await redisClient.flushAll(); 
+
+        return true
+    } catch (error) {
+        throw new Error({ message: 'Failed to clear Redis data', error: error.message });
+    }
 }

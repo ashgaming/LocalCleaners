@@ -144,8 +144,6 @@ module.exports.employesDetails = async (req, res, next) => {
     }
 }
 
-
-
 module.exports.usersDetails = async (req, res, next) => {
     try {
 
@@ -166,7 +164,6 @@ module.exports.usersDetails = async (req, res, next) => {
     }
 }
 
-
 module.exports.usersList = async (req, res, next) => {
     try {
 
@@ -182,5 +179,17 @@ module.exports.usersList = async (req, res, next) => {
     }
     catch (error) {
         return res.status(500).json({ message: 'Internal server error', error })
+    }
+}
+
+module.exports.clearRedisData = async (req, res, next) => {
+    try {
+        const cleared =  adminService.clearRedisData(); // Clear all Redis keys
+        if(!cleared){
+            throw new Error('Something Went Wrong')
+        }
+        res.status(200).json({ message: 'All Redis data cleared successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to clear Redis data', error: error.message });
     }
 }
