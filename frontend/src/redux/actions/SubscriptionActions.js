@@ -20,9 +20,11 @@ import {
     SET_CITY,
     SET_STATE,
     SET_PINCODE,
+    GET_SUBSCRIPTION_RESET,
 } from "../constants/SubscriptionConstants";
 import { BACKEND_URL } from "./UserActions";
 import { token } from "../constants/RequiedConstant";
+import { simulateAsyncOperation } from "../../helper/subscriptionHelper";
 
 export const setSelectedPlan = (plan) => ({
     type: SET_SELECTED_PLAN,
@@ -95,7 +97,7 @@ export const setError = (error) => ({
 });
 
 
-export const createSubscription = (fdata) => async (dispatch,navigate) => {
+export const createSubscription = (fdata) => async (dispatch, navigate) => {
 
     try {
 
@@ -106,7 +108,7 @@ export const createSubscription = (fdata) => async (dispatch,navigate) => {
         dispatch({
             type: CREATE_SUBSCRIPTION_REQUEST
         })
-        
+
 
         const { data } = await axios.post(`${BACKEND_URL}/subscriptions/create`,
             fdata,
@@ -132,6 +134,13 @@ export const createSubscription = (fdata) => async (dispatch,navigate) => {
                 ? error.response.data.message
                 : error.message
         })
+
+        // Clear error after 5 seconds
+        setTimeout(() => {
+            dispatch({
+                type: CREATE_SUBSCRIPTION_RESET,
+            });
+        }, 5000);
     }
 }
 
@@ -169,6 +178,12 @@ export const getSubscription = () => async (dispatch) => {
             payload: error.response && error.response.data.message
                 ? error.response.data.message
                 : error.message
+        })
+
+        simulateAsyncOperation();
+
+        dispatch({
+            type: GET_SUBSCRIPTION_RESET
         })
     }
 }

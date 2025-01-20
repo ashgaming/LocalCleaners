@@ -30,13 +30,16 @@ export const getUserData = (type) => async (dispatch, navigate) => {
             },
         }
 
-        const { data } = await axios.get(endpoints[type],
-            config)
+        const { data } = await axios.get(endpoints[type],config)
+
+        console.log('user data', data)
+
+        setUserSession(data)
 
         const date = new Date()
         dispatch({
             type: USER_DATA_SUCCESS,
-            payload: {data , creatdOn : date.toLocaleDateString()}
+            payload: {...data, creatdOn : date.toLocaleDateString()}
         })
 
     }
@@ -73,7 +76,9 @@ export const userLogin = (type, fdata) => async (dispatch) => {
         const { data } = await axios.post(endpoints[type],
             fdata,
             config)
-
+            
+        console.log('user login ', data)
+       
         dispatch({
             type: USER_LOGIN_SUCCESS,
             payload: data
@@ -82,6 +87,8 @@ export const userLogin = (type, fdata) => async (dispatch) => {
         setUserSession(data)
 
         dispatch(getUserData(type))
+
+       
     }
     catch (error) {
         dispatch({
@@ -121,7 +128,7 @@ export const userRegister = (type, fdata) => async (dispatch) => {
         })
         localStorage.setItem('token', JSON.stringify(data))
 
-        getUserData(type)
+        dispatch(getUserData(type))
     }
     catch (error) {
         dispatch({
@@ -132,9 +139,6 @@ export const userRegister = (type, fdata) => async (dispatch) => {
         })
     }
 }
-
-
-
 
 export const createEmployee = (fdata) => async (dispatch) => {
     const endpoints = {
@@ -181,12 +185,12 @@ export const logoutUser = () => async (dispatch) => {
     dispatch({ type: USER_LOGIN_RESET })
     dispatch({type: LIST_MY_BOOKING_RESET})
     clearUserSession();
-    localStorage.removeItem('MY_SUBSCRIPTION_LIST')
-    localStorage.removeItem('SUBSCRIPTION_PLAN_LIST')
-    localStorage.removeItem('activeWork')
-    localStorage.removeItem('mybooking')
-    localStorage.removeItem('subscriberInfo')
-    localStorage.removeItem('userAddress')
+    localStorage.removeItem('MY_SUBSCRIPTION_LIST');
+    localStorage.removeItem('SUBSCRIPTION_PLAN_LIST');
+    localStorage.removeItem('activeWork');
+    localStorage.removeItem('mybooking');
+    localStorage.removeItem('subscriberInfo');
+    localStorage.removeItem('userAddress');
 
     return true;
 }

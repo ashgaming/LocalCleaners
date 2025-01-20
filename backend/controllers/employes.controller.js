@@ -29,7 +29,7 @@ module.exports.registerEmployes = async (req, res, next) => {
 
     const token = employee.generateAuthToken();
 
-    res.status(201).json({ token, employee })
+    res.status(201).json({ token })
 }
 
 module.exports.registerEmployesProfile = async (req, res, next) => {
@@ -61,7 +61,7 @@ module.exports.registerEmployesProfile = async (req, res, next) => {
 }
 
 module.exports.loginEmployes = async (req, res, next) => {
-
+    try{
     const error = validationResult(req)
     if (!error.isEmpty()) {
         return res.status(400).json({ errors: error.array() })
@@ -83,16 +83,24 @@ module.exports.loginEmployes = async (req, res, next) => {
     if (!isMatch) {
         return res.status(401).json({ message: 'Invalid email and password' })
     }
-
+    
     const token = employee.generateAuthToken();
     
     res.cookie('token',token);
-
-    res.status(201).json({ token, employee })
+    
+    res.status(201).json({ token })
+    
+    } catch(error){
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 }
 
 module.exports.getEmployesProfile = async (req, res, next) => {
-    res.status(200).json({ employee : req.employee});
+    const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+    res.status(200).json({ token, employee : req.employee});
 }
 
 module.exports.logoutEmployes = async (req, res, next) =>{

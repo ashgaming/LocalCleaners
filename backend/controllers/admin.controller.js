@@ -8,8 +8,8 @@ module.exports.pushEmailToAdmin = async (req, res, next) => {
     try { // Configure Nodemailer
         const transporter = nodemailer.createTransport({
             service: 'gmail', // Or your preferred email service
-            secure:true,
-            port:465,
+            secure: true,
+            port: 465,
             auth: {
                 user: process.env.SUPER_USER_EMAIL,
                 pass: process.env.SUPER_USER_PASSWORD,
@@ -65,42 +65,52 @@ module.exports.registerAdmin = async (req, res, next) => {
 
     const token = employee.generateAuthToken();
 
-    res.status(201).json({ token, employee })
+    res.status(201).json({ token })
 }
 
 module.exports.loginAdmin = async (req, res, next) => {
+    try {
+        const error = validationResult(req)
+        if (!error.isEmpty()) {
+            return res.status(400).json({ errors: error.array() })
+        }
 
-    const error = validationResult(req)
-    if (!error.isEmpty()) {
-        return res.status(400).json({ errors: error.array() })
+        const { email, password } = req.body
+
+        const hashedPassword = await employesModel.hashedPassword(password);
+
+        const employee = await employesModel.findOne({ email, role: 'admin' }).select('+password')
+
+        if (!employee) {
+            return res.status(401).json({ message: 'Invalid email and password' })
+        }
+
+        const isMatch = await employee.comparePassword(password);
+
+
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid email and password' })
+        }
+
+        const token = employee.generateAuthToken();
+
+        res.cookie('token', token);
+
+        res.status(201).json({ token })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' })
     }
 
-    const { email, password } = req.body
-
-    const hashedPassword = await employesModel.hashedPassword(password);
-
-    const employee = await employesModel.findOne({ email, role: 'admin' }).select('+password')
-
-    if (!employee) {
-        return res.status(401).json({ message: 'Invalid email and password' })
-    }
-
-    const isMatch = await employee.comparePassword(password);
-
-
-    if (!isMatch) {
-        return res.status(401).json({ message: 'Invalid email and password' })
-    }
-
-    const token = employee.generateAuthToken();
-
-    res.cookie('token', token);
-
-    res.status(201).json({ token, employee })
 }
 
 module.exports.getAdminProfile = async (req, res, next) => {
-    res.status(200).json({ admin: req.admin });
+    const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    res.status(200).json({ token, employee: req.admin });
 }
 
 
@@ -184,8 +194,8 @@ module.exports.usersList = async (req, res, next) => {
 
 module.exports.clearRedisData = async (req, res, next) => {
     try {
-        const cleared =  adminService.clearRedisData(); // Clear all Redis keys
-        if(!cleared){
+        const cleared = adminService.clearRedisData(); // Clear all Redis keys
+        if (!cleared) {
             throw new Error('Something Went Wrong')
         }
         res.status(200).json({ message: 'All Redis data cleared successfully' });

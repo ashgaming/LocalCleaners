@@ -64,7 +64,7 @@ const SubscriptionSchema = new moongose.Schema({
     payment: {
         amount: {
             type: Number,
-            required: true
+          //  required: true
         },
         method: {
             type: String,

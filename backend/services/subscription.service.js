@@ -6,7 +6,9 @@ async function getSubscriptionAmount(service, duration) {
     try {
         const plan = await plansModel.findById(service).exec()
 
-        return plan?.price * duration + (18 % plan?.price * duration);
+        console.log(plan)
+
+        return Number(plan?.price * duration + (18 % plan?.price * duration));
     } catch (err) {
         return 0
     }
@@ -20,7 +22,7 @@ async function sendNewSubscriberNotification() {
 
         // Send email
         const mailOptions = {
-            from: 'your_email@gmail.com',
+            from: 'ashishalhat8@gmail.com',
             to: email,
             subject: 'Notification',
             text: message,
@@ -41,16 +43,15 @@ async function sendNewSubscriberNotification() {
 }
 
 module.exports.createSubscriptions = async ({
-    user, address, service, start_date, end_date, countryCode, phoneNumber, id, lng, ltd, email, duration
+    user, address, service, start_date, end_date, countryCode, phoneNumber, lng, ltd, email, duration
 }) => {
 
-    if (!user || !address || !service || !phoneNumber) {
-        console.log(user, address, service, start_date, end_date, countryCode, phoneNumber, id, lng, ltd, email, duration)
+    if (!user || !address || !service || !phoneNumber) {     
         throw new Error('All fiels are required');
     }
 
     const plan =  {
-        service: id,
+        service,
         start_date,
         end_date,
         address,
@@ -60,7 +61,7 @@ module.exports.createSubscriptions = async ({
     }
 
     const subscription = await subscriptionModel.create({
-        user: user,
+        user: user._id,
         contactInfo: {
             email: email || user?.email,
             phoneNumber,
@@ -68,7 +69,7 @@ module.exports.createSubscriptions = async ({
         },
         plan,
         payment: {
-            amount: await getSubscriptionAmount(id, duration)
+            amount: await getSubscriptionAmount(service, duration)
         }
     })
 

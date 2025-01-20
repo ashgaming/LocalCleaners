@@ -5,6 +5,9 @@ import { CreditCard } from 'lucide-react';
 import { createSubscription, setCity, setCountryCode, setEmail, setFirstname, setHouse, setLastname, setMonths, setPhoneNumber, setPincode, setState, setStreet } from '../../redux/actions/SubscriptionActions';
 import BackButton from '../../components/subscription/BackButton';
 import ElementLoader from '../../components/ui/ELementLoader';
+import ApiLoader from '../../components/ui/ApiLoader';
+//import { simulateAsyncOperation } from '../../helper/subscriptionHelper';
+import { CREATE_SUBSCRIPTION_RESET } from '../../redux/constants/SubscriptionConstants';
 
 const UserInfoPage = () => {
     const dispatch = useDispatch();
@@ -18,11 +21,12 @@ const UserInfoPage = () => {
         success,
     } = useSelector((state) => state.createSubscription);
 
-    useEffect(()=>{
+    useEffect(() => {
         if (success) {
             navigate(`/checkout/${subscription?._id}`);
         }
-    },[success])
+    }, [success])
+
 
     if (!selectedPlan) {
         navigate('/services');
@@ -92,30 +96,30 @@ const UserInfoPage = () => {
 
 
         const fdata = {
-            id:selectedPlan._id,
-            service: selectedPlan.name,
+            id: selectedPlan._id,
+            service: selectedPlan._id,
             firstname,
             lastname,
             email,
             countryCode,
             phoneNumber,
-            duration:months,
+            duration: months,
             start_date,
             end_date,
             address: `${house} ${street} ${city} ${state} ${pincode}`
         }
 
-        localStorage.setItem('subscriberInfo',JSON.stringify({
+        localStorage.setItem('subscriberInfo', JSON.stringify({
             firstname, lastname, email, countryCode, phoneNumber, street, house, state, city, pincode
         }))
 
-        await dispatch(createSubscription(fdata))
-
-      
+        dispatch(createSubscription(fdata))
 
     };
 
-  
+ 
+
+
 
     return (
         <div className="min-h-screen bg-gray-50 py-12 px-4">
@@ -123,8 +127,6 @@ const UserInfoPage = () => {
 
                 <div className="mb-6">
                     <BackButton to="/services" />
-                    {loading && <ElementLoader />}
-
                 </div>
 
                 <div className="bg-white rounded-lg shadow-lg p-8">
@@ -133,7 +135,7 @@ const UserInfoPage = () => {
                     </div>
 
                     <h2 className="text-2xl font-bold text-center mb-8">Subscriber Details</h2>
-                    {error && <h1 className='text-red-700'>{error}</h1>}
+                    {error && <h1 className='text-red-700'>Something went wrong</h1>}
 
                     <div className="mb-6">
                         <h3 className="text-lg font-semibold mb-2">Selected Plan: {selectedPlan?.name}</h3>
@@ -247,8 +249,11 @@ const UserInfoPage = () => {
                     <button
                         className="w-full bg-blue-600 mt-5 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition-colors"
                         onClick={e => handleProceedToCheckout(e)}
+                        disabled={loading}
                     >
-                        Proceed to Checkout
+                        {
+                            loading ? <ApiLoader /> : ' Proceed to Checkout '
+                        }
                     </button>
                 </div>
             </div>
