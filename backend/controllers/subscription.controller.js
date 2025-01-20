@@ -13,11 +13,11 @@ module.exports.CreateSubscription = async (req, res, next) => {
 
         const { address, service, start_date , end_date,countryCode , phoneNumber ,id , email, duration } = req.body
         
-        console.log('user :' , req.user )
+       // console.log('id :' , id)
         
         const isSubscriptionAlreadyExist = await subscriptionModel.findOne({
             user: req.user,
-            service: id,
+            service,
         }).exec();
 
 
@@ -26,14 +26,14 @@ module.exports.CreateSubscription = async (req, res, next) => {
         }
 
         const subscription = await subscriptionService.createSubscriptions({ 
-            user: req.user, address, service, start_date , end_date,countryCode , phoneNumber ,id , email , duration
+            user: req.user, address, service, start_date , end_date,countryCode , phoneNumber , email , duration
         });
 
 
         res.status(201).json({ subscription })
     } catch (error) {
         res.status(400).json({ errors: error })
-        console.log(error)
+     //   console.log(error)
     }
 }
 

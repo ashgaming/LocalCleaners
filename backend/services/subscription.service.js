@@ -6,7 +6,9 @@ async function getSubscriptionAmount(service, duration) {
     try {
         const plan = await plansModel.findById(service).exec()
 
-        return plan?.price * duration + (18 % plan?.price * duration);
+        console.log('plan' , plan)
+
+        return Number(plan?.price * duration + (18 % plan?.price * duration));
     } catch (err) {
         return 0
     }
@@ -50,7 +52,7 @@ module.exports.createSubscriptions = async ({
     }
 
     const plan =  {
-        service: id,
+        service,
         start_date,
         end_date,
         address,
@@ -59,7 +61,7 @@ module.exports.createSubscriptions = async ({
         lng: lng || null,
     }
 
-    const subscription = await subscriptionModel.create({
+    const sub = {
         user: user,
         contactInfo: {
             email: email || user?.email,
@@ -68,9 +70,13 @@ module.exports.createSubscriptions = async ({
         },
         plan,
         payment: {
-            amount: await getSubscriptionAmount(id, duration)
+            amount: await getSubscriptionAmount(service, duration)
         }
-    })
+    }
+
+    console.log('sub', sub)
+
+    const subscription = await subscriptionModel.create( sub )
 
     return subscription;
 
