@@ -1,5 +1,36 @@
 const http = require('http');
 const app = require('./app');
+// const { initializeSocket } = require('./socket');
+const port = process.env.PORT || 4000;
+
+const server = http.createServer(app);
+
+// Error handling for the server
+server.on('error', (err) => {
+    console.error('Server error:', err);
+    if (err.code === 'EADDRINUSE') {
+        console.error(`Port ${port} is already in use`);
+    } else if (err.code === 'EPIPE') {
+        console.error('Broken pipe error. Possible client disconnection.');
+    } else {
+        console.error('Unexpected server error:', err);
+    }
+    process.exit(1); // Exit if the server encounters an error
+});
+
+// Start the server
+server.listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
+});
+
+// initializeSocket(server);
+
+
+
+
+
+/*const http = require('http');
+const app = require('./app');
 //const { initializeSocket } = require('./socket');
 const port = process.env.PORT || 4000;
 const cluster = require('cluster');
@@ -37,9 +68,10 @@ if (cluster.isMaster) {
         process.exit(1); // Exit if the server encounters an error
     });
 
-    //  initializeSocket(server);
     // Start the server
     server.listen(port, () => {
         console.log(`Worker ${process.pid} is listening on port ${port}`);
     });
+    //  initializeSocket(server);
 }
+*/
