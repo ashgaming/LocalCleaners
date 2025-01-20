@@ -41,4 +41,8 @@ router.get('/user',
 router.get('/send-notification'
 , adminController.pushEmailToAdmin)
 
+// Route to clear all Redis data
+router.delete('/clear-redis', adminController.clearRedisData
+);
+
 module.exports = router;
