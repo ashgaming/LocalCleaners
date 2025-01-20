@@ -6,7 +6,7 @@ async function getSubscriptionAmount(service, duration) {
     try {
         const plan = await plansModel.findById(service).exec()
 
-        console.log(plan)
+       // console.log(plan)
 
         return Number(plan?.price * duration + (18 % plan?.price * duration));
     } catch (err) {
