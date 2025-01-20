@@ -75,7 +75,7 @@ module.exports.createSubscriptions = async ({
 
   
 
-    const date = new Date()
+   /* const date = new Date()
     const today = date.now()
     const message = `
     Dear Admin,
@@ -103,7 +103,7 @@ module.exports.createSubscriptions = async ({
         subject,
         message
     )
-
+*/
     return subscription;
 }
 
