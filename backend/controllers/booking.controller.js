@@ -45,11 +45,11 @@ module.exports.GetUserBookingById = async (req, res, next) => {
             return res.status(400).json({ errors: error.array() })
         }
 
-        const { _id } = req.body;
+        const { _id } = req.query;
 
         const booking = await bookingService.GetUserBookingById({ user: req.user, _id })
 
-        res.status(200).json({ data: list })
+        res.status(200).json({ booking })
 
 
     } catch (error) {

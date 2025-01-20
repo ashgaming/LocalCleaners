@@ -25,7 +25,7 @@ module.exports.getEmployeeByPaymentReceiveCode = async (req, res, next) => {
             return res.status(400).json({ errors: error.array() })
         }
 
-        const { subId, email } = req.query;
+        const { subId, email } = req.body;
         const { user } = req;
 
 
@@ -61,8 +61,9 @@ module.exports.getEmployeeByPaymentReceiveCode = async (req, res, next) => {
 
         pushEmailToAdmin('', employee?.email, 'Cash Payment Reciever Otp', message)
 
-
-        res.status(201).json({ otp })
+        console.log(otp)
+        
+        res.status(201).json({ "success":true })
     }
     catch (error) {
         return res.status(500).json({ message: 'Internal server error', error })
@@ -77,7 +78,7 @@ module.exports.completeCashPayment = async (req, res, next) => {
             return res.status(400).json({ errors: error.array() })
         }
 
-        const { subId, otp ,amount } = req.query;
+        const { subId, otp ,amount } = req.body;
         const { user } = req;
 
         

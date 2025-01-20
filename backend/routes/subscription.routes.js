@@ -24,6 +24,6 @@ router.get('/list', authMiddleware.authUser,
   subscriptionController.GetSubscription)
 
 router.get('/details', authMiddleware.authUser,
-  query('id').isMongoId().withMessage('service id required'),
+  query('id').isMongoId().withMessage('subscription id required'),
   subscriptionController.GetSubscriptionDetails)
 module.exports = router;

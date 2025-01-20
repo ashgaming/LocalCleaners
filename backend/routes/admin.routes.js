@@ -18,7 +18,7 @@ router.post('/login', [
     body('password').isLength({ min: 8 }).withMessage('Password must be 8 letter long')
 ], adminController.loginAdmin)
 
-router.post('/profile', authMiddleware.authAdmin, adminController.getAdminProfile)
+router.get('/profile', authMiddleware.authAdmin, adminController.getAdminProfile)
 
 router.get('/employees',
     authMiddleware.authAdmin

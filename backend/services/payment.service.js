@@ -38,7 +38,7 @@ module.exports.completeCashPayment = async ({subId , amount}) => {
                 status: 'completed',
                 transactionId: generateTransactionId()
             },
-        })
+        },{new:true}).exec()
 
         return subscription;
 

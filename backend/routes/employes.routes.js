@@ -34,19 +34,19 @@ router.get('/logout', authMiddleware.authEmployes, employesController.logoutEmpl
 
 router.get('/get-employee-list', authMiddleware.authEmployes, employesController.getEmployesAvailability)
 
-router.get('/verify-booking-otp', authMiddleware.authEmployes, [
-  query('_id').isMongoId().withMessage('Id not found'),
-  query('otp').isString().isLength({ min: 6, max: 6 }).withMessage('Id not found')
+router.post('/verify-booking-otp', authMiddleware.authEmployes, [
+  body('_id').isMongoId().withMessage('Id not found'),
+  body('otp').isString().isLength({ min: 6, max: 6 }).withMessage('Id not found')
 ], employesController.VerifyBooking)
 
-router.get('/complete-Work', authMiddleware.authEmployes, [
-  query('_id').isMongoId().withMessage('Id not found'),
-  query('otp').isString().isLength({ min: 6, max: 6 }).withMessage('Id not found')
+router.post('/complete-Work', authMiddleware.authEmployes, [
+  body('_id').isMongoId().withMessage('Id not found'),
+  body('otp').isString().isLength({ min: 6, max: 6 }).withMessage('Id not found')
 ], employesController.completeWork)
 
-router.get('/confirm-payment', authMiddleware.authEmployes, [
-  query('_id').isMongoId().withMessage('Id not found'),
-  query('otp').isString().isLength({ min: 6, max: 6 }).withMessage('Id not found')
+router.post('/confirm-payment', authMiddleware.authEmployes, [
+  body('_id').isMongoId().withMessage('Id not found'),
+  body('otp').isString().isLength({ min: 6, max: 6 }).withMessage('Id not found')
 ], employesController.completePayment)
 
 router.get('/service/availability', [

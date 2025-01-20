@@ -168,12 +168,23 @@ module.exports.ListBookingOfEmployee = async ({employee}) => {
 
 
 module.exports.GetBookingById = async ({ employee, _id }) => {
+    console.log(employee, _id)
     if (!employee || !_id) {
+        
         throw new Error('Employee and id not found');
     }
 
     try {
-        const booking = await bookingModel.findOne({ employee: employee._id, _id }).populate('user').populate('employee').exec();
+        const booking = await bookingModel.findOne({ employee: employee._id, _id })
+    .populate({
+        path: 'user',
+        select: 'fullname email phoneNumber profileImage', // Select specific fields from the 'user' schema
+    })
+    .populate({
+        path: 'employee',
+        select: 'fullname email phoneNumber profileImage', // Select specific fields from the 'employee' schema
+    })
+    .exec();
         return booking;
     } catch (error) {
         throw new Error(`Error fetching bookings: ${error.message}`);

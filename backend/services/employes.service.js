@@ -33,7 +33,7 @@ module.exports.createEmployesProfile = async ({
             throw new Error('All fiels are required');
         }
 
-        const employes = employesModel.findOneAndUpdate({
+        const employes = await employesModel.findOneAndUpdate({
             email
         }, {
             address,
@@ -41,7 +41,8 @@ module.exports.createEmployesProfile = async ({
             experience,
             phoneNumber,
             status: 'active'
-        })
+        },{ new: true } // Optionally return the updated document
+        ).exec();
 
         return employes;
     } catch (err) {
@@ -52,7 +53,7 @@ module.exports.createEmployesProfile = async ({
 module.exports.getEmployesAvailability = async () => {
     try {
 
-        const employes = await employesModel.find().select('fullname').select('email').exec();
+        const employes = await employesModel.find().select('fullname email role').exec();
 
         return employes;
 
@@ -66,7 +67,7 @@ module.exports.getEmployesAvailability = async () => {
 module.exports.VerifyBooking = async ({ employee, otp, _id }) => {
     try {
 
-        const book = await bookingsModel.findOneAndUpdate({
+     /*   const book = await bookingsModel.findOneAndUpdate({
             _id,
             employee,
         }, {
@@ -74,13 +75,20 @@ module.exports.VerifyBooking = async ({ employee, otp, _id }) => {
                 start_otp: '123456',
                 end_otp: '123456'
             }
-        }).select('otp').exec();
+        },{
+            new:true
+        }).select('otp').exec();*/
 
         const verify = await bookingsModel.findOne({
             _id,
             employee,
         }).select('otp').exec();
 
+        
+        if (!verify){
+            throw new Error(`Booking not found or employee mismatch.`); 
+            return
+        }
 
         if (otp === verify.otp.start_otp) {
             return {
@@ -94,9 +102,7 @@ module.exports.VerifyBooking = async ({ employee, otp, _id }) => {
         }
 
     } catch (error) {
-
         throw new Error(`Error fetching bookings: ${error.message}`);
-
     }
 }
 
@@ -140,13 +146,17 @@ module.exports.completePayment = async ({ employee, otp, _id }) => {
             payment: {
                 status: 'completed'
             }
-        }).exec();
+        },
+            {
+                new:true
+            }
+        ).exec();
 
         if (!booking) {
             throw new Error('Booking not found or employee mismatch.');
         }
 
-        return { booking };
+        return  booking ;
     } catch (error) {
         throw new Error(`Error completing work: ${error.message}`);
     }
