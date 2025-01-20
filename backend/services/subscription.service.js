@@ -6,7 +6,7 @@ async function getSubscriptionAmount(service, duration) {
     try {
         const plan = await plansModel.findById(service).exec()
 
-        console.log('plan' , plan)
+        console.log(plan)
 
         return Number(plan?.price * duration + (18 % plan?.price * duration));
     } catch (err) {
@@ -22,7 +22,7 @@ async function sendNewSubscriberNotification() {
 
         // Send email
         const mailOptions = {
-            from: 'your_email@gmail.com',
+            from: 'ashishalhat8@gmail.com',
             to: email,
             subject: 'Notification',
             text: message,
@@ -43,11 +43,10 @@ async function sendNewSubscriberNotification() {
 }
 
 module.exports.createSubscriptions = async ({
-    user, address, service, start_date, end_date, countryCode, phoneNumber, id, lng, ltd, email, duration
+    user, address, service, start_date, end_date, countryCode, phoneNumber, lng, ltd, email, duration
 }) => {
 
-    if (!user || !address || !service || !phoneNumber) {
-        console.log(user, address, service, start_date, end_date, countryCode, phoneNumber, id, lng, ltd, email, duration)
+    if (!user || !address || !service || !phoneNumber) {     
         throw new Error('All fiels are required');
     }
 
@@ -61,8 +60,8 @@ module.exports.createSubscriptions = async ({
         lng: lng || null,
     }
 
-    const sub = {
-        user: user,
+    const subscription = await subscriptionModel.create({
+        user: user._id,
         contactInfo: {
             email: email || user?.email,
             phoneNumber,
@@ -72,13 +71,9 @@ module.exports.createSubscriptions = async ({
         payment: {
             amount: await getSubscriptionAmount(service, duration)
         }
-    }
+    })
 
-    console.log('sub', sub)
-
-    const subscription = await subscriptionModel.create( sub )
-
-    return subscription;
+  
 
     const date = new Date()
     const today = date.now()
@@ -108,7 +103,10 @@ module.exports.createSubscriptions = async ({
         subject,
         message
     )
+
+    return subscription;
 }
+
 
 module.exports.getSubscriptions = async ({ user }) => {
 

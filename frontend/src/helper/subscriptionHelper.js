@@ -22,3 +22,10 @@ export const createSubscription = async (planId) => {
       total: Number(total.toFixed(2))
     };
   };
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  export const simulateAsyncOperation = async () => {
+    await delay(5000); // Delay for 2 seconds
+  };
+  

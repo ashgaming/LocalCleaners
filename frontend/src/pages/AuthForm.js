@@ -21,14 +21,11 @@ export default function AuthForm() {
   const [showPassword, setShowPassword] = useState(false);
 
 
-  const { loading: loadingRegister,
-    // user: usersRegister,
-      error: errorRegister 
-    } = useSelector(state => state.userRegister)
+  const { loading: loadingRegister, user: usersRegister, error: errorRegister, success: successRegister } = useSelector(state => state.userRegister)
   const { loading: loadingLogin, user: usersLogin, error: errorLogin, success } = useSelector(state => state.userLogin)
-  const { loading: loadingData,  user: usersData,
-   //  error: errorData, usersSuccess 
-    } = useSelector(state => state.userData)
+  const { loading: loadingData, user: usersData,
+    error: errorData, success: usersSuccess
+  } = useSelector(state => state.userData)
 
   const RoleButtons = [
     {
@@ -57,7 +54,7 @@ export default function AuthForm() {
     password: '',
     firstname: '',
     lastname: '',
-    otp:''
+    otp: ''
   });
 
   const validateForm = (email, password, firstname, lastname) => {
@@ -96,7 +93,7 @@ export default function AuthForm() {
       if (validateForm(formData.email, formData.password)) {
         await dispatch(userLogin(role, formData));
 
-        if (usersLogin.token) {
+        if (usersLogin?.token) {
           navigate('/')
         }
       } else {
@@ -119,19 +116,18 @@ export default function AuthForm() {
 
     if (usersLogin?.token) {
 
-      if (usersData?.employee) {
-        if (usersData?.employee.status === 'unregistered') {
+      if (usersData?.user?.employee) {
+        if (usersData?.user?.employee?.status === 'unregistered') {
           navigate('/employee/profile');
         } else {
           navigate('/');
         }
-
+        
         return;
       }
       navigate('/');
-
     }
-  }, [success,usersData?._id, usersData?.employee?._id])
+  }, [success, usersData?._id, usersData?.employee?._id])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
@@ -164,6 +160,12 @@ export default function AuthForm() {
             ))
           }
         </div>
+
+
+        {
+          successRegister && authMode !== 'login' && <h5>Account Created Sussessfully"</h5>
+        }
+
 
         <form onSubmit={(e) => handleSubmit(e)} className="space-y-6">
 
@@ -243,7 +245,7 @@ export default function AuthForm() {
             </button>
           </div>
 
-          {authMode === 'register' && role !== userType[2] &&  (
+          {authMode === 'register' && role !== userType[2] && (
             <CustomInput
               label="Confirm Password"
               type={showPassword ? 'text' : 'password'}
