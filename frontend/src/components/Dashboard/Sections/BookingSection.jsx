@@ -17,19 +17,19 @@ const BookingSection = () => {
   useEffect(() => {
     const fetchData = async () => {
 
-      if (user.employee ) {
+      if (user?.employee ) {
         if(!bookingSuccess)
         {await dispatch(listBooking());}
       }
 
-      else if (user) {
+      else if (user?.user) {
         if(!success){
           await dispatch(listMyBooking());
         }
       }
 
       else {
-        return
+        return <h1>User not found</h1>
       }
     };
 

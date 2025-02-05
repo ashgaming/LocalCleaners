@@ -41,7 +41,7 @@ export default function CashPayment({amounts}) {
           value={end_otp}
           onChange={(e) => setEnd_otp(e.target.value)}
           className="w-full px-3 py-2 border rounded-md mt-2"
-          placeholder="Enter End Otp"
+          placeholder="Enter Cash Payment Otp"
           min="0"
           step="0.01"
         />

@@ -6,7 +6,7 @@ function connectToDB() {
         useUnifiedTopology: true
     }).then(() => {
         console.log('Connected to DB');
-    }).catch(err => console.log(err));
+    }).catch(err => console.log(`DB failed to connect` , err));
     return
 }
 

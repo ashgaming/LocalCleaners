@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router();
-const { body } = require("express-validator")
 const imageController = require('../controllers/image.controller')
 const authMiddleware = require('../middlewares/auth.middleware')
 const multerMiddleware = require('../middlewares/multer.middleware')

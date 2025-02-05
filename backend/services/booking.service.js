@@ -2,7 +2,7 @@ const bookingModel = require('../models/booking.model');
 const crypto = require('crypto')
 
 
-function getOtp(num) {
+module.exports.getOtp = (num) => {
     function generateOtp(num) {
         const otp = crypto.randomInt(Math.pow(10, num - 1), Math.pow(10, num)).toString()
         return otp;
@@ -41,7 +41,7 @@ module.exports.createBooking = async ({
         phoneNumber,
         otp: {
             start_otp: getOtp(6),
-            end_otp: getOtp(6)       
+            end_otp: getOtp(6)
         },
         payment: {
             amount: getAmount(service)
@@ -57,7 +57,14 @@ module.exports.GetUserBookingById = async ({ user, _id }) => {
     }
 
     try {
-        const booking = await bookingModel.findOne({ user: user._id, _id }).exec();
+        const booking = await bookingModel
+            .findOne({ user: user._id, _id }).select('BookingData otp service payment work_status') 
+            .populate('user') 
+            .populate({
+                path: 'employee', 
+                select: '-role -lastpay -paymentReceiveCode -salary', 
+            })
+            .exec();
         return booking;
     } catch (error) {
         throw new Error(`Error fetching bookings: ${error.message}`);
@@ -81,13 +88,13 @@ module.exports.UpcomingUserBookingList = async ({ user }) => {
         const upcomingBookings = await bookingModel
             .find({
                 user: user._id,
-                status: { $in: ['upcoming', 'pending','ongoing'] },
+                status: { $in: ['upcoming', 'pending', 'ongoing'] },
             })
             .sort({ date: 1 })
             .exec();
 
-        
-        const Bookings = upcomingBookings.map(booking=>{
+
+        const Bookings = upcomingBookings.map(booking => {
             console.log(booking.BookingData.date)
             console.log(booking.BookingData.time)
         })
@@ -107,7 +114,7 @@ module.exports.ListUserBooking = async ({ user }) => {
     }
 
     try {
-        const list = await bookingModel.find({ user: user._id }).populate('user').populate('employee'). exec();
+        const list = await bookingModel.find({ user: user._id }).populate('user').populate('employee').exec();
         return list;
     } catch (error) {
         throw new Error(`Error fetching bookings: ${error.message}`);
@@ -129,33 +136,33 @@ module.exports.ListAdminBooking = async () => {
     }
 };
 
-module.exports.AssignEmployee = async ( {requestId, selectedEmployee} ) => {
+module.exports.AssignEmployee = async ({ requestId, selectedEmployee }) => {
     if (!requestId || !selectedEmployee) {
         throw new Error('All _ids are required');
     }
 
     console.log(requestId, selectedEmployee)
     const booking = await bookingModel.findByIdAndUpdate(
-        requestId, 
-        { 
+        requestId,
+        {
             employee: selectedEmployee,
-            work_status:'ongoing'
+            work_status: 'ongoing'
 
-         }, 
-        { new: true } 
-      );
+        },
+        { new: true }
+    );
 
     return booking;
 }
 
 
-module.exports.ListBookingOfEmployee = async ({employee}) => {
+module.exports.ListBookingOfEmployee = async ({ employee }) => {
 
     try {
 
         const bookings = await bookingModel.find({
-          //   employee ,
-             work_status: 'ongoing' }).populate('user').populate('employee').exec();
+            work_status: 'ongoing'
+        }).populate('user').populate('employee').exec();
 
         return bookings;
 
@@ -170,21 +177,21 @@ module.exports.ListBookingOfEmployee = async ({employee}) => {
 module.exports.GetBookingById = async ({ employee, _id }) => {
     console.log(employee, _id)
     if (!employee || !_id) {
-        
+
         throw new Error('Employee and id not found');
     }
 
     try {
         const booking = await bookingModel.findOne({ employee: employee._id, _id })
-    .populate({
-        path: 'user',
-        select: 'fullname email phoneNumber profileImage', // Select specific fields from the 'user' schema
-    })
-    .populate({
-        path: 'employee',
-        select: 'fullname email phoneNumber profileImage', // Select specific fields from the 'employee' schema
-    })
-    .exec();
+            .populate({
+                path: 'user',
+                select: 'fullname email phoneNumber profileImage', // Select specific fields from the 'user' schema
+            })
+            .populate({
+                path: 'employee',
+                select: 'fullname email phoneNumber profileImage', // Select specific fields from the 'employee' schema
+            })
+            .exec();
         return booking;
     } catch (error) {
         throw new Error(`Error fetching bookings: ${error.message}`);
@@ -197,13 +204,13 @@ module.exports.TodaysBookingsList = async () => {
     try {
 
         const bookings = await bookingModel.find(
-            { 
+            {
                 work_status: 'pending',
-                date:today
+                date: today
             }
         ).populate('user').
-        populate('employee').
-        exec();
+            populate('employee').
+            exec();
 
         return bookings;
 

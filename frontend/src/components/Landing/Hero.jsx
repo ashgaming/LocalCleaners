@@ -13,12 +13,14 @@ export default function Hero() {
 
 
   return (
-    <>
-      {
-        user?.employee ?
-          (
-            <div className="pt-16 md:pt-20 bg-gradient-to-r from-blue-500 to-blue-600" >
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+    <div className="bg-gradient-to-r  from-blue-500 to-blue-600" >
+      <div className="bg-[url(https://cdn.leonardo.ai/users/e15b22cf-87d1-48f9-a0ed-397ea6753634/generations/1700d358-a554-478e-9209-46df5ed2ddb6/Leonardo_Phoenix_10_A_mesmerizing_professional_graphic_design_2.jpg)] bg-cover bg-center h-auto flex flex-col justify-center items-center text-white pt-16 md:pt-20 ">
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+          {
+            user?.employee ?
+              (
+
                 <div className="text-center">
                   <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6">
                     Professional Cleaning Services
@@ -46,13 +48,9 @@ export default function Hero() {
                     Manage
                   </Link>
                 </div>
-              </div>
-            </div>
-          )
-          :
-          (
-            <div className="pt-16 md:pt-20 bg-gradient-to-r from-blue-500 to-blue-600">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+              )
+              :
+              (
                 <div className="text-center">
                   <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6">
                     Professional Cleaning Services
@@ -77,13 +75,11 @@ export default function Hero() {
                     Book Now
                   </Link>
                 </div>
-              </div>
-            </div>
-          )
-      }
 
-
-
-    </>
+              )
+          }
+        </div>
+      </div>
+    </div>
   );
 }

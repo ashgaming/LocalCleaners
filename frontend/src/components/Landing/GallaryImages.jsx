@@ -39,6 +39,7 @@ const GalleryImages = () => {
 
   return (
     <div className="p-5">
+      <h1 className="text-4xl font-bold text-center mb-10"> Gallery  </h1>
       <div className="grid grid-cols-4 gap-10 sm:gap-5 xs:gap-2">{renderImages()}</div>
     </div>
   );

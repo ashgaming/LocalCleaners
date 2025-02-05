@@ -13,6 +13,8 @@ export default function Booking() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const {user} = useSelector(state=>state.userData)
+
   const [isComplete, setIsComplete] = useState(false);
   const [step, setStep] = useState(1);
 
@@ -114,6 +116,14 @@ export default function Booking() {
       navigate('/')
     }
   }, [success, isStepComplete])
+
+  if(!user?.user){
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+      <h2 className="text-2xl font-semibold text-gray-700">Please login as user first</h2>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

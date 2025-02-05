@@ -10,7 +10,7 @@ export default function ServiceDetails({booking}) {
       <div className="space-y-3">
         <div className="flex items-center">
           <User className="h-5 w-5 text-gray-400 mr-3" />
-          <span>{`${booking.user.fullname?.firstname} ${booking.user.fullname?.lastname}`}</span>
+          <span>{`${booking?.user?.fullname?.firstname} ${booking?.user?.fullname?.lastname}`} - {booking?.service}</span>
         </div>
         
         <div className="flex items-center">

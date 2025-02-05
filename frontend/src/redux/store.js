@@ -33,12 +33,12 @@ const initialState = {
 
 const middleware = [thunk]
 
-const store = createStore(CombineReducers, initialState,
-  composeWithDevTools(applyMiddleware(...middleware),
-  ))
+// const store = createStore(CombineReducers, initialState,
+//   composeWithDevTools(applyMiddleware(...middleware),
+//   ))
 
 // during production
-/*const store = createStore(CombineReducers, initialState,
-    applyMiddleware(...middleware))*/
+const store = createStore(CombineReducers, initialState,
+    applyMiddleware(...middleware))
 
 export default store;

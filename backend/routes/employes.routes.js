@@ -37,7 +37,7 @@ router.get('/get-employee-list', authMiddleware.authEmployes, employesController
 router.post('/verify-booking-otp', authMiddleware.authEmployes, [
   body('_id').isMongoId().withMessage('Id not found'),
   body('otp').isString().isLength({ min: 6, max: 6 }).withMessage('Id not found')
-], employesController.VerifyBooking)
+], employesController.StartBooking)
 
 router.post('/complete-Work', authMiddleware.authEmployes, [
   body('_id').isMongoId().withMessage('Id not found'),
@@ -54,4 +54,6 @@ router.get('/service/availability', [
 ], employesController.getIsServiceAvalable)
 
 
+router.get('/get-payment-code', authMiddleware.authEmployes ,[
+], employesController.getEmployeesPaymentCode)
 module.exports = router;

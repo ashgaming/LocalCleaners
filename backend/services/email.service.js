@@ -10,12 +10,31 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-module.exports.pushEmailToAdmin = async (sender,reciver,subject,message) => {
+module.exports.pushEmailToAdmin = async ({sender,reciver,subject,message}) => {
     try { 
        
         // Send email
         const mailOptions = {
             from: 'ashishalhat8@gmail.com',
+            to: reciver,
+            subject: subject,
+            text: message,
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        return ;
+    } catch (err) {
+        return err
+    }
+}
+
+module.exports.SendEmail = async ({sender,reciver,subject,message}) => {
+    try { 
+       
+        // Send email
+        const mailOptions = {
+            from: sender,
             to: reciver,
             subject: subject,
             text: message,

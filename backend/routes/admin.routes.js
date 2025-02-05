@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const { body, query } = require("express-validator")
 const adminController = require('../controllers/admin.controller')
+const bookingController = require('../controllers/booking.controller')
 const authMiddleware = require('../middlewares/auth.middleware')
 
 router.post('/register', [
@@ -40,6 +41,10 @@ router.get('/user',
 
 router.get('/send-notification'
 , adminController.pushEmailToAdmin)
+
+router.get('/list-pending', authMiddleware.authAdmin , 
+    bookingController.ListAdminBooking
+  )
 
 // Route to clear all Redis data
 router.delete('/clear-redis', adminController.clearRedisData

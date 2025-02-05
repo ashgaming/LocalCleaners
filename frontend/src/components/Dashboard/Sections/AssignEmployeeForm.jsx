@@ -17,7 +17,7 @@ const replaceObjectInNestedArray = (array, id, newObject) => {
   });
 };
 
-export default function AssignEmployeeForm({ requestId, onSuccess, onError }) {
+export default function AssignEmployeeForm({ requestId}) {
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -59,9 +59,9 @@ export default function AssignEmployeeForm({ requestId, onSuccess, onError }) {
       })
 
 
-      onSuccess();
+      alert('Staff Assign Successfully')
     } catch (error) {
-      onError();
+      alert('Staff Assigning failed')
     } finally {
       setIsLoading(false);
     }

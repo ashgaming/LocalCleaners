@@ -107,7 +107,7 @@ export const listMyBooking = (fdata) => async (dispatch) => {
 }
 
 
-export const listPendingBooking = (fdata) => async (dispatch) => {
+export const listPendingBooking = () => async (dispatch) => {
 
     const token = JSON.parse(localStorage.getItem('token'))?.token || null;
     try {

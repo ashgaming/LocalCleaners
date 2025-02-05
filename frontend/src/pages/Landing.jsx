@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useRef } from 'react';
 import { Footer } from '../components/layout/Footer';
 import CompanyDetails from '../components/Landing/CompanyDetails';
 import HeroSkeleton from '../skeletons/HeroSkeleton';
@@ -6,6 +6,8 @@ import FeaturesSkeleton from '../skeletons/FeaturesSkeleton';
 import ServicesSkeleton from '../skeletons/ServicesSkeleton';
 import CompanyDetailsSkeleton from '../skeletons/CompanyDetailsSkeleton';
 import FooterSkeleton from '../skeletons/FooterSkeleton';
+import AnimatedCardList from '../components/layout/AnimatedCardList';
+import Article from '../components/layout/Article';
 const AvalabityCheck = React.lazy(() => import('../components/layout/AvalabityCheck'));
 const Services = React.lazy(() => import('../components/Landing/Services'));
 const GallaryImages = React.lazy(() => import('../components/Landing/GallaryImages'));
@@ -14,18 +16,23 @@ const Hero = React.lazy(() => import('../components/Landing/Hero'));
 const Features = React.lazy(() => import('../components/Landing/Features'));
 const ElementLoader = React.lazy(() => import('../components/ui/ELementLoader'));
 
-
-
 const Landing = () => {
  
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Suspense fallback={<ElementLoader />}>
+    <div className="bg-gray-50 ">
+
+      {/* <Suspense fallback={<ElementLoader />}>
         <Navbar />
-      </Suspense>
+      </Suspense> */}
+
+      {/* <HeroSection /> */}
+
       <Suspense fallback={<HeroSkeleton />}>
             <Hero />
       </Suspense>
+
+
       <Suspense fallback={<FeaturesSkeleton />}>
         <Features />
       </Suspense>
@@ -34,9 +41,13 @@ const Landing = () => {
         <Services />
       </Suspense>
 
+      {/* <AnimatedCardList /> */}
+
       <Suspense fallback={<ServicesSkeleton />}>
         <AvalabityCheck />
       </Suspense>
+
+      <Article />
 
       <Suspense fallback={<ServicesSkeleton />}>
         <GallaryImages />

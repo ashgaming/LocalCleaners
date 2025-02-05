@@ -132,7 +132,7 @@ module.exports.getEmployesAvailability = async (req, res, next) => {
  }
 
  
-module.exports.VerifyBooking = async (req, res, next) => {
+module.exports.StartBooking = async (req, res, next) => {
 
     const error = validationResult(req)
     if (!error.isEmpty()) {
@@ -143,7 +143,7 @@ module.exports.VerifyBooking = async (req, res, next) => {
 
         const { _id , otp } = req.body
 
-        const verifyStatus = await employesService.VerifyBooking({employee:req.employee,_id,otp})
+        const verifyStatus = await employesService.StartBooking({employee:req.employee,_id,otp})
 
         return res.status(200).json({ verifyStatus })
 
@@ -152,7 +152,7 @@ module.exports.VerifyBooking = async (req, res, next) => {
     }
  }
 
- module.exports.completePayment = async (req, res, next) => {
+module.exports.completePayment = async (req, res, next) => {
 
     const error = validationResult(req)
     if (!error.isEmpty()) {
@@ -172,7 +172,7 @@ module.exports.VerifyBooking = async (req, res, next) => {
     }
  }
 
- module.exports.completeWork = async (req, res, next) => {
+module.exports.completeWork = async (req, res, next) => {
 
     const error = validationResult(req)
     if (!error.isEmpty()) {
@@ -192,7 +192,7 @@ module.exports.VerifyBooking = async (req, res, next) => {
     }
  }
 
- module.exports.getIsServiceAvalable = async (req, res, next) => {
+module.exports.getIsServiceAvalable = async (req, res, next) => {
 
    try  {
         const error = validationResult(req)
@@ -216,3 +216,26 @@ module.exports.VerifyBooking = async (req, res, next) => {
 }
 
 }
+
+module.exports.getEmployeesPaymentCode = async (req, res, next) => {
+
+    try  {
+         const error = validationResult(req)
+     if (!error.isEmpty()) {
+         return res.status(400).json({ errors: error.array() })
+     }
+  
+     const emp = req.employee;
+ 
+     await employesService.getEmployeesPaymentCode({
+        empId:emp?._id,
+        email:emp?.email
+     });
+ 
+     res.status(201).json({ message:'Otp Send Succesfully'})
+ 
+ }catch(error){
+     return res.status(500).json({ message: 'Internal server error' })
+ }
+ 
+ }

@@ -16,6 +16,7 @@
 #env file
 .env
 
+./backend/test.js
 ./backend/.env
 ./frontend/.env
 
@@ -31,3 +32,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .codegpt
+
+.test.js

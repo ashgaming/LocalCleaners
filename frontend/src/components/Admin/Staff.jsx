@@ -37,8 +37,8 @@ const Staff = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {employees.map((member) => (
-              <tr key={member?.id}>
+            {employees.map((member,index) => (
+              <tr key={index}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 h-10 w-10">

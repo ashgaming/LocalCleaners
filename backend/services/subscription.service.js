@@ -1,12 +1,11 @@
 const subscriptionModel = require('../models/subscription.model')
 const plansModel = require('../models/plans.model');
-const { pushEmailToAdmin } = require('./email.service');
 
 async function getSubscriptionAmount(service, duration) {
     try {
         const plan = await plansModel.findById(service).exec()
 
-        console.log(plan)
+       // console.log(plan)
 
         return Number(plan?.price * duration + (18 % plan?.price * duration));
     } catch (err) {
@@ -75,34 +74,6 @@ module.exports.createSubscriptions = async ({
 
     return subscription;
 
-    const date = new Date()
-    const today = date.now()
-    const message = `
-    Dear Admin,
-
-    This email is to inform you of a new subscriber to https://localcleaner.onrender.com.
-
-    Subscriber Information:
-
-    Name: ${user?.fullname?.firstname} ${user?.fullname?.lastname}
-    Email Address: ${email}
-    Subscription Date: ${today}
-    Subscription Type: ${plan}
-    You can view the subscriber's details and manage their subscription within the  https://localcleaner.onrender.com admin panel.
-
-    Thank you,
-
-    Admin
-    `
-    const reciver = email;
-    const subject = 'New Subscriber on Local Cleaner'
-
-    pushEmailToAdmin(
-        '',
-        email,
-        subject,
-        message
-    )
 }
 
 module.exports.getSubscriptions = async ({ user }) => {

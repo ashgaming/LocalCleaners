@@ -41,7 +41,7 @@ const BookingSchema = new moongose.Schema({
 
     work_status: {
         type: String,
-        enum: ['pending', 'ongoing', 'completed', 'cancel'],
+        enum: ['pending', 'ongoing', 'started','completed', 'cancel'],
         default: 'pending',
     },
 

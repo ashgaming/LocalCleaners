@@ -1,11 +1,12 @@
 import React from 'react';
-import { LayoutDashboard, Users, Briefcase, UsersRound, FolderKanban, Home, MessageSquare, MoveLeft } from 'lucide-react';
+import { LayoutDashboard, Users, Briefcase, UsersRound, FolderKanban, Home, MessageSquare, MoveLeft, ListOrdered } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 
 const Sidebar = ({ activeSection, onSectionChange, setIsSidebarOpen }) => {
     const menuItems = [
         { id: 'analytics', icon: LayoutDashboard, label: 'Analytics' },
+        { id: 'booking-new', icon: ListOrdered, label: 'New Booking' },
         { id: 'services', icon: Briefcase, label: 'Services' },
         { id: 'users', icon: Users, label: 'Users' },
         { id: 'staff', icon: UsersRound, label: 'Staff' },

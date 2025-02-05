@@ -3,12 +3,14 @@ import { X, CheckCircle, AlertCircle } from 'lucide-react';
 import AssignEmployeeForm from './AssignEmployeeForm';
 import RequestStatusBadge from './RequestStatusBadge';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const BookingDetails = memo(({ booking, isOpen, onClose, setIsDetailsOpen }) => {
   const [status, setStatus] = useState(null);
   const { user } = useSelector(state => state.userData)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (status == 'success') {
@@ -28,18 +30,18 @@ const BookingDetails = memo(({ booking, isOpen, onClose, setIsDetailsOpen }) => 
 
   const HandleStartWork = (e) => {
     e.preventDefault()
-   /* setIsDetailsOpen(false)
     const date = new Date()
     const activeWork = {
       Start_Time: date,
       Booking_id: booking?._id,
-    }*/
+    }
+    
+    localStorage.setItem('activeWork', JSON.stringify(activeWork));
+    
+    setIsDetailsOpen(false)
 
- //   localStorage.setItem('activeWork', JSON.stringify(activeWork));
-
+    navigate('/active-work')
   }
-
-
 
   if (!isOpen) return null;
 
@@ -115,19 +117,25 @@ const BookingDetails = memo(({ booking, isOpen, onClose, setIsDetailsOpen }) => 
                 <RequestStatusBadge status={booking?.work_status} />
               </div>
 
-              <div class="flex space-x-4 w-full">
+              {['admin', 'manager'].includes(user?.employee?.role) && booking?.work_status === 'pending' &&
+                <div>
+                  <AssignEmployeeForm requestId={booking?._id} />
+                </div>
+              }
+              <div className="flex space-x-4 w-full">
                 <button className="bg-red-300 w-full hover:bg-red-400 text-gray-800 font-bold py-2 px-4 rounded"
                   onClick={HandleCancelBooking}
                 >Cancel</button>
 
-                {
-                  user?.employee?._id === booking?.employee?._id &&
+            {  
+             booking?.work_status !== 'pending' &&
                   <Link to={`/active-work`} className='w-full'>
                     <button className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    //  onClick={e => HandleStartWork(e)}
+                      onClick={e => HandleStartWork(e)}
                     >Start</button>
                   </Link>
-                }
+                  }
+
               </div>
 
             </div>

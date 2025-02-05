@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "@react-three/drei": "^9.120.8",
     "@react-three/fiber": "^8.17.12",
     "axios": "^1.7.9",

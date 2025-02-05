@@ -77,7 +77,7 @@ module.exports.loginAdmin = async (req, res, next) => {
 
         const { email, password } = req.body
 
-        const hashedPassword = await employesModel.hashedPassword(password);
+      //  const hashedPassword = await employesModel.hashedPassword(password);
 
         const employee = await employesModel.findOne({ email, role: 'admin' }).select('+password')
 
