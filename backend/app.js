@@ -16,6 +16,7 @@ const feedbackRoutes = require('./routes/feedback.routes')
 const plansRoutes = require('./routes/plans.routes')
 const adminRoutes = require('./routes/admin.routes')
 const paymentRoutes = require('./routes/payment.routes')
+const postsRoutes = require('./routes/posts.routes')
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
@@ -53,6 +54,7 @@ app.use('/feedbacks', feedbackRoutes);
 app.use('/plans', plansRoutes);
 app.use('/admin', adminRoutes);
 app.use('/payment', paymentRoutes);
+app.use('/post', postsRoutes);
 
 
 module.exports = app;

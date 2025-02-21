@@ -4,6 +4,7 @@ import { createBookingReducer, deleteBookingReducer, listAvalableEmployesReducer
 import { createSubscriptionPlansReducer, createSubscriptionReducer, getSubscriptionPlanReducer, getSubscriptionReducer, subscriptionReducer } from "./reducers/SubscriptionReducers";
 import { dashboardReducer, getEmployeeAdminReducer, getEmployeesAdminReducer, getFeedBacksAdminReducer, getUsersAdminReducer } from "./reducers/AdminReducer";
 import { completePaySubCashReducer, getStaffToPaySubCashReducer } from "./reducers/paymentReducer";
+import { createPostReducer, getPostReducer, getPostsReducer } from "./reducers/PostReducer";
 
 
 const CombineReducers = combineReducers({
@@ -38,6 +39,10 @@ const CombineReducers = combineReducers({
     completePaySubCash:completePaySubCashReducer,
 
     avalabityCheck:avalabityCheckReducer,
+
+    createPosts:createPostReducer,
+    getPosts:getPostsReducer,
+    getPost:getPostReducer,
     
 });
 

@@ -1,6 +1,5 @@
 const plansModel = require('../models/plans.model')
 const redisClient = require('../redisClient');
-const date = new Date()
 
 module.exports.createPlans = async ({
     name, price, description, features, duration
